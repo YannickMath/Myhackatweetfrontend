@@ -44,8 +44,12 @@
 .title3 {
   font-size: 30px;
 }
+.title4{
+  width: 20vw;
+}
 
 .BtnSignup {
+  cursor: pointer;
   background-color: blue;
   border-radius: 50px;
   color: #ffffff;
@@ -53,11 +57,11 @@
   font-weight: bold;
   font-size: 18px;
   border: solid 3px blue;
- 
-
+  transition: transform 0.5s ease;
 }
 
 .BtnSignin {
+  cursor: pointer;
   background-color: black;
   border-radius: 50px;
   color: blue;
@@ -65,4 +69,27 @@
   font-weight: bold;
   font-size: 18px;
   border: solid 3px gray;
+  transition: transform 0.5s ease;
+
+}
+
+.BtnSignin:hover{
+  font-size: 20px;
+  font-weight: bold;
+  transform: scale(1.2);
+  
+}
+.BtnSignup:hover{
+  font-size: 20px;
+  font-weight: bold;
+ 
+  transform: scale(1.2);
+}
+
+.Btn{
+  transition: transform 0.5s ease;
+}
+
+.Btn:hover{
+  transform: scale(1.2);
 }

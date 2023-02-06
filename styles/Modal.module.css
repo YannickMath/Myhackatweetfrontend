@@ -1,0 +1,35 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50vw;
+  height: 55vh;
+  background-color: rgb(24, 24, 24);
+  color: #ffffff;
+  border: solid 2px #ffffff;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  align-items: center;
+}
+
+.inputModal {
+  height: 10%;
+  background-color: solid 2px rgb(24, 24, 24);
+}
+
+.BtnSignup {
+  color: #ffffff;
+  border-radius: 15px;
+  color: black;
+}
+
+.logoModal span {
+    margin: 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+  }
+  
