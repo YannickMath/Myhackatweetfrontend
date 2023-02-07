@@ -5,25 +5,20 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { login } from "@/reducers/user.slice";
 
-
-
-export default function Modal({ setModal }) {
+export default function ModalSignin({ setModalSignin }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-
-  const [inputFirstname, setInputFirstname] = useState("");
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleClickSignup = async () => {
+  const handleClickSignin = async () => {
     try {
-      const response = await fetch("http://localhost:3000/users/signup", {
+      const response = await fetch("http://localhost:3000/users/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstname: inputFirstname,
           username: inputUsername,
           password: inputPassword,
         }),
@@ -37,11 +32,10 @@ export default function Modal({ setModal }) {
             
             })
         )
+    
         router.push("/welcome");
-
       } else {
         setErrorMessage("Authentication failed");
-        setInputFirstname("");
         setInputPassword("");
         setInputUsername("");
       }
@@ -60,18 +54,15 @@ export default function Modal({ setModal }) {
             transform: "rotate(180deg)",
           }}
         />
-        <span onClick={() => setModal(false)} style={{ cursor: "pointer" }}>
+        <span
+          onClick={() => setModalSignin(false)}
+          style={{ cursor: "pointer" }}
+        >
           X
         </span>
       </div>
-      <h2>Create your Hackatweet account</h2>
-      <input
-        type="text"
-        placeholder="firstname"
-        className={styles.inputModal}
-        value={inputFirstname}
-        onChange={(e) => setInputFirstname(e.target.value)}
-      />
+      <h2>Connect to Hackatweet</h2>
+
       <input
         type="text"
         placeholder="username"
@@ -87,8 +78,8 @@ export default function Modal({ setModal }) {
         onChange={(e) => setInputPassword(e.target.value)}
       />
       {errorMessage && <p>{errorMessage}</p>}
-      <button className={styles.BtnSignup} onClick={handleClickSignup}>
-        Signup
+      <button className={styles.BtnSignup} onClick={handleClickSignin}>
+        Signin
       </button>
     </div>
   );

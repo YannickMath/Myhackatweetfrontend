@@ -1,0 +1,136 @@
+.main {
+  background-color: black;
+  color: #ffffff;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+.leftContainer {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-left: 15px;
+}
+
+.leftContainerBottomPart1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoTweeter {
+  height: 80vh;
+  display: flex;
+  justify-content: baseline;
+}
+
+.BtnLogout {
+  border: solid 2px #ffffff;
+  color: #ffffff;
+  background-color: black;
+  border-radius: 20px;
+  margin: 0px 0px 15px 5px;
+  width: 7vw;
+  height: 4vh;
+  font-size: 15px;
+}
+.middleContainer {
+  border: solid 2px gray;
+  width: 50%;
+  height: 100%;
+}
+
+.leftContainerBottomPart {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.leftLastBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.rightContainer {
+  width: 30%;
+  height: 100%;
+}
+
+.userName {
+  display: flex;
+  margin: 3px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+}
+.hashtagName {
+  display: flex;
+  margin: 3px;
+  color: gray;
+  font-size: 18px;
+}
+
+.eggPicture {
+  border-radius: 20px;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
+.middleTopContainer {
+  height: 30%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  margin-left: 25px;
+}
+
+.middleBottomContainer {
+  border-bottom: solid 2px gray;
+  display: flex;
+}
+
+.tweetCaracters {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 20vw;
+  margin-left: 400px;
+}
+
+/* .tweetInput {
+ width: 100vw;
+ 
+} */
+
+.BtnTweet {
+  background-color: blue;
+  color: #ffffff;
+  height: 4vh;
+  width: 8vw;
+  border-radius: 25px;
+  font-size: 16px;
+  border: solid 0.1px gray;
+  cursor: pointer;
+}
+.BtnTweet:hover {
+    transform: scale(1.2);
+    transition-duration: 0.2s;
+   
+    
+}
+
+.spanCount {
+    color: #ffffff;
+}

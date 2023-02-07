@@ -2,14 +2,20 @@ import styles from "../styles/Home.module.css";
 import { AiOutlineTwitter } from "react-icons/ai";
 import Modal from "./Modal";
 import { useState } from "react";
+import ModalSignin from "./ModalSignin";
 
 
 export default function Home() {
     const [modal, setModal] = useState (false)
+    const [modalSignin, setModalSignin] = useState(false)
 
    const handleClickSignup = () => {
     setModal(true)
-    console.log('modal')
+   
+   }
+   const handleClickSignin = () => {
+    setModalSignin(true)
+ 
    }
     
   return (
@@ -40,9 +46,10 @@ export default function Home() {
         <div className={styles.rightBottomContainer}>
           <button className={styles.BtnSignup} onClick={handleClickSignup}>Sign up</button>
           <h4 className={styles.title4}>Already have an account ?</h4>
-          <button className={styles.BtnSignin}>Sign in</button>
+          <button className={styles.BtnSignin} onClick={handleClickSignin}>Sign in</button>
         </div>
-        {modal && <Modal />}
+        {modal && <Modal setModal={setModal}/>}
+        {modalSignin && <ModalSignin setModalSignin={setModalSignin}/>}
       </div>
     </div>
   );
