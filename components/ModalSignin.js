@@ -25,14 +25,15 @@ export default function ModalSignin({ setModalSignin }) {
       });
       const data = await response.json();
       if (data.result) {
+        console.log('TOKEN', data.user.token)
         dispatch(
-            login({
-           
-              username: inputUsername,
-            
-            })
-        )
-    
+          login({
+            username: inputUsername,
+            password: inputPassword,
+            token: data.user.token,
+          })
+        );
+
         router.push("/welcome");
       } else {
         setErrorMessage("Authentication failed");

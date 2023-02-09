@@ -41,6 +41,13 @@
   width: 7vw;
   height: 4vh;
   font-size: 15px;
+  cursor: pointer;
+}
+
+.BtnLogout:hover{
+  transform: scale(1.2);
+  transition-duration: 0.2s;
+  
 }
 .middleContainer {
   border: solid 2px gray;
@@ -97,8 +104,16 @@
 }
 
 .middleBottomContainer {
-  border-bottom: solid 2px gray;
+  border-top: solid 2px gray;
   display: flex;
+  height: 70%;
+  color: #ffffff;
+  overflow-y: scroll;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+
+
 }
 
 .tweetCaracters {
@@ -109,10 +124,7 @@
   margin-left: 400px;
 }
 
-/* .tweetInput {
- width: 100vw;
- 
-} */
+
 
 .BtnTweet {
   background-color: blue;
@@ -133,4 +145,29 @@
 
 .spanCount {
     color: #ffffff;
+}
+
+
+.tweet{
+  color: #ffffff;
+  font-size: 20px;
+  border-bottom: solid 2px gray;
+  width: 600px;
+  height: 200px;
+  display: flex;
+ 
+}
+
+.topPartTweet{
+  /* display: flex; */
+  justify-content: start;
+  align-items: center; 
+  width: 45vw;
+  padding: 5px;
+ 
+}
+
+.tweetContainer{
+  /* border: solid 1px gray; */
+  
 }

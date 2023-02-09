@@ -5,12 +5,9 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { login } from "@/reducers/user.slice";
 
-
-
 export default function Modal({ setModal }) {
   const router = useRouter();
   const dispatch = useDispatch();
-
 
   const [inputFirstname, setInputFirstname] = useState("");
   const [inputUsername, setInputUsername] = useState("");
@@ -31,14 +28,14 @@ export default function Modal({ setModal }) {
       const data = await response.json();
       if (data.result) {
         dispatch(
-            login({
-           
-              username: inputUsername,
-            
-            })
-        )
+          login({
+            username: inputUsername,
+            firstname: inputFirstname,
+            password: inputPassword,
+            token: data.user.token,
+          })
+        );
         router.push("/welcome");
-
       } else {
         setErrorMessage("Authentication failed");
         setInputFirstname("");
