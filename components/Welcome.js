@@ -3,12 +3,6 @@ import { useRouter } from "next/router";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import {
-  addTweet,
-  likeTweet,
-  deleteTweet,
-  removeAllTweet,
-} from "@/reducers/tweet.slice";
 import { logout } from "@/reducers/user.slice";
 import { useEffect } from "react";
 import { AiFillDislike, AiFillLike } from "react-icons/ai";
@@ -115,15 +109,7 @@ export default function Welcome() {
 
   // console.log("TWEETS.TWEET", tweets);
   const handleLikeTweet = async (idTweet) => {
-    const userId = tweets.map((e) => e._id)
-    const tweetId = tweets.map((e) => e.tweet)
-    const newtweetId= tweetId[0].map((e) => console.log('E.ID', e._id))
-    
-
-    // console.log('E.ID', userId)
-    // console.log('TWEETID', tweetId)
-console.log('IDTWWET', idTweet)
-console.log('USERID', userId[0])
+    const userId = tweets.map((e) => e._id);
 
     try {
       const response = await fetch(
@@ -142,7 +128,34 @@ console.log('USERID', userId[0])
       if (response.ok) {
         fetchData();
       } else {
-        throw new Error("Failed to add tweet to the store");
+        throw new Error("Failed to like tweet to the store");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDislikeTweet = async (idTweet) => {
+    const userId = tweets.map((e) => e._id);
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/tweets/dislikeTweet/${userId[0]}/${idTweet}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to dislike tweet");
+      }
+
+      const data = await response.json();
+      // console.log("DATA", data);
+      if (response.ok) {
+        fetchData();
+      } else {
+        throw new Error("Failed to dislike tweet to the store");
       }
     } catch (error) {
       console.error(error);
@@ -150,28 +163,31 @@ console.log('USERID', userId[0])
   };
 
   const tweetView = tweets.map((tweet, i) => {
-    // console.log("TWEETRED", tweetRed);
-    // console.log("TWEETS", tweets);
+    // console.log("TWEETRED", tweetView.tweet);
+    console.log("TWEETS", typeof tweet);
+    // console.log('LIKECOUNT', Message.like.likecount)
 
+    // console.log('MESSAGE', Message.like)
     return (
       <div key={i} className={styles.tweetContainer}>
         {tweet.tweet.length > 0
           ? tweet.tweet.map((Message, j) => (
-              <div key={j}>
+            
+            <div key={j}>
                 <div className={styles.topPartTweet}>
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <img
                       className={styles.eggPicture}
                       src="tweet.jpg"
                       alt="egg tweeter"
-                    />
+                      />
                     <p
                       style={{
                         fontSize: "25px",
                         fontWeight: "bold",
                         marginLeft: "5px",
                       }}
-                    >
+                      >
                       {tweet.firstname}
                     </p>
                     <p style={{ fontSize: "18px", marginLeft: "5px" }}>
@@ -189,17 +205,17 @@ console.log('USERID', userId[0])
                       wordWrap: "break-word",
                       marginRight: "15px",
                     }}
-                  >
-                    {" "}
+                    >
                     {Message.tweet}
                   </p>
+                  {console.log('Message',Message)}
                 </div>
                 <div style={{ margin: "10px" }}>
                   <RiDeleteBin5Fill
                     onClick={() => handleDeleteTweet(Message.tweet)}
                     style={{ cursor: "pointer", width: "25px" }}
                     size={20}
-                  />
+                    />
                   <AiFillLike
                     onClick={() => handleLikeTweet(Message._id)}
                     size={20}
@@ -210,6 +226,7 @@ console.log('USERID', userId[0])
                     }}
                   />
                   <AiFillDislike
+                    onClick={() => handleDislikeTweet(Message._id)}
                     size={20}
                     style={{
                       color: "white",
@@ -224,10 +241,10 @@ console.log('USERID', userId[0])
                         width: "25px",
                         justifyContent: "center",
                         alignItems: "center",
+                        color: "white",
                       }}
-                    >
-                      {" "}
-                      0
+                    >0
+                      {Message.like[0].likeCount}
                     </p>
                     <p
                       style={{
@@ -235,10 +252,11 @@ console.log('USERID', userId[0])
                         width: "25px",
                         justifyContent: "center",
                         alignItems: "center",
+                        color: "white",
+
                       }}
-                    >
-                      {" "}
-                      0
+                    >0
+                      {Message.dislike[0].dislikeCount}
                     </p>
                   </div>
                 </div>
