@@ -44,10 +44,9 @@
   cursor: pointer;
 }
 
-.BtnLogout:hover{
+.BtnLogout:hover {
   transform: scale(1.2);
   transition-duration: 0.2s;
-  
 }
 .middleContainer {
   border: solid 2px gray;
@@ -58,7 +57,6 @@
 .leftContainerBottomPart {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
 }
 
 .leftLastBox {
@@ -94,25 +92,23 @@
   margin: 5px;
 }
 .middleTopContainer {
-  height: 30%;
+  height: 20vh;
 
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
   margin-left: 25px;
 }
 
 .middleBottomContainer {
   border-top: solid 2px gray;
   display: flex;
-  height: 70%;
-  color: #ffffff;
+  height: 80vh;
   overflow-y: scroll;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
-
+  overflow-x:hidden;
+  flex-direction: column; 
+  /* align-items: center; */
+  align-items: flex-end;
 
 }
 
@@ -123,8 +119,6 @@
   width: 20vw;
   margin-left: 400px;
 }
-
-
 
 .BtnTweet {
   background-color: blue;
@@ -137,37 +131,32 @@
   cursor: pointer;
 }
 .BtnTweet:hover {
-    transform: scale(1.2);
-    transition-duration: 0.2s;
-   
-    
+  transform: scale(1.2);
+  transition-duration: 0.2s;
 }
 
 .spanCount {
-    color: #ffffff;
+  color: #ffffff;
 }
 
-
-.tweet{
+.tweet {
   color: #ffffff;
   font-size: 20px;
   border-bottom: solid 2px gray;
   width: 600px;
   height: 200px;
   display: flex;
- 
 }
 
-.topPartTweet{
-  /* display: flex; */
+.topPartTweet {
   justify-content: start;
-  align-items: center; 
-  width: 45vw;
+  align-items: center;
+  width: 49vw;
   padding: 5px;
- 
+  border: solid 1px gray;
+  border-bottom: none;
 }
 
-.tweetContainer{
+.tweetContainer {
   /* border: solid 1px gray; */
-  
 }

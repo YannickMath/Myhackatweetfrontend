@@ -3,10 +3,16 @@ import { useRouter } from "next/router";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { addTweet, removeTweet, deleteTweet } from "@/reducers/tweet.slice";
+import {
+  addTweet,
+  likeTweet,
+  deleteTweet,
+  removeAllTweet,
+} from "@/reducers/tweet.slice";
 import { logout } from "@/reducers/user.slice";
 import { useEffect } from "react";
-import {RiDeleteBin5Fill, RiHeart2Fill } from "react-icons/ri";
+import { AiFillDislike, AiFillLike } from "react-icons/ai";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 export default function Welcome() {
   // Router hook
@@ -24,28 +30,32 @@ export default function Welcome() {
   const [newTweet, setNewTweet] = useState("");
   const [tweets, setTweets] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/tweets");
-        const data = await response.json();
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/tweets");
+      const data = await response.json();
+      if (data.result) {
         setTweets(data.user);
-      } catch (error) {
-        console.error(error);
       }
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
   // Handle input change
   const handleChange = (e) => {
-    if (e.target.value.length <= 280) {
+    if (e.target.value.length > 0 || e.target.value.length <= 280) {
       setNewTweet(e.target.value);
       setCount(e.target.value.length);
     }
   };
 
   // Handle tweet
+  console.log("TWEETS", tweets);
   const handleTweet = async () => {
     try {
       const response = await fetch(
@@ -61,14 +71,12 @@ export default function Welcome() {
       if (!response.ok) {
         throw new Error("Failed to post tweet");
       }
-      const data = await response.json();
 
-      console.log("DDATARESULT", data.result);
+      const data = await response.json();
       if (response.ok) {
-        dispatch(addTweet(newTweet));
-        setTweets([...tweets, newTweet]);
         setNewTweet("");
         setCount(0);
+        fetchData();
       } else {
         throw new Error("Failed to add tweet to the store");
       }
@@ -82,58 +90,161 @@ export default function Welcome() {
     dispatch(logout());
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/tweets");
-        const data = await response.json();
-        setTweets(data.user);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
+  const handleDeleteTweet = async (patate) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/tweets/deleteTweet/${userRed.token}/${patate}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-//   const handleDeleteTweet = async function () => {
-//     try {
-//         const response = await fetch("http://localhost:3000/tweets/deleteTweet", {
-//             method: "DELETE",
-//         }
-        
-//         )
-//     }
-//     dispatch(removeTweet())
-//     console.log()
-//   }
-  
+      const data = await response.json();
+      if (data.result) {
+        fetchData();
+      } else {
+        console.error(data.error);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // console.log("TWEETS.TWEET", tweets);
+  const handleLikeTweet = async (idTweet) => {
+    const userId = tweets.map((e) => e._id)
+    const tweetId = tweets.map((e) => e.tweet)
+    const newtweetId= tweetId[0].map((e) => console.log('E.ID', e._id))
+    
+
+    // console.log('E.ID', userId)
+    // console.log('TWEETID', tweetId)
+console.log('IDTWWET', idTweet)
+console.log('USERID', userId[0])
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/tweets/likeTweet/${userId[0]}/${idTweet}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to like tweet");
+      }
+
+      const data = await response.json();
+      // console.log("DATA", data);
+      if (response.ok) {
+        fetchData();
+      } else {
+        throw new Error("Failed to add tweet to the store");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const tweetView = tweets.map((tweet, i) => {
-      
+    // console.log("TWEETRED", tweetRed);
+    // console.log("TWEETS", tweets);
 
     return (
       <div key={i} className={styles.tweetContainer}>
-        {tweet.tweet.map((Message, j) => (
-          <div key={j}>
-            <div className={styles.topPartTweet}>
-              <div style={{ display: "flex", alignItems:"center" }}>
-                <img
-                  className={styles.eggPicture}
-                  src="tweet.jpg"
-                  alt="egg tweeter"
-                />
-                <p style={{ fontSize: "20px", fontWeight: "bold" }}>
-                  {tweet.firstname}
-                </p>
-                <p>@{tweet.username}</p>
+        {tweet.tweet.length > 0
+          ? tweet.tweet.map((Message, j) => (
+              <div key={j}>
+                <div className={styles.topPartTweet}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      className={styles.eggPicture}
+                      src="tweet.jpg"
+                      alt="egg tweeter"
+                    />
+                    <p
+                      style={{
+                        fontSize: "25px",
+                        fontWeight: "bold",
+                        marginLeft: "5px",
+                      }}
+                    >
+                      {tweet.firstname}
+                    </p>
+                    <p style={{ fontSize: "18px", marginLeft: "5px" }}>
+                      @{tweet.username}
+                    </p>
+                  </div>
+                  <p
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      fontSize: "18px",
+                      marginLeft: "10px",
+                      height: "6vh",
+                      wordWrap: "break-word",
+                      marginRight: "15px",
+                    }}
+                  >
+                    {" "}
+                    {Message.tweet}
+                  </p>
+                </div>
+                <div style={{ margin: "10px" }}>
+                  <RiDeleteBin5Fill
+                    onClick={() => handleDeleteTweet(Message.tweet)}
+                    style={{ cursor: "pointer", width: "25px" }}
+                    size={20}
+                  />
+                  <AiFillLike
+                    onClick={() => handleLikeTweet(Message._id)}
+                    size={20}
+                    style={{
+                      color: "white",
+                      cursor: "pointer",
+                      width: "25px",
+                    }}
+                  />
+                  <AiFillDislike
+                    size={20}
+                    style={{
+                      color: "white",
+                      cursor: "pointer",
+                      width: "25px",
+                    }}
+                  />
+                  <div style={{ display: "flex", marginLeft: "25px" }}>
+                    <p
+                      style={{
+                        marginLeft: "5px",
+                        width: "25px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {" "}
+                      0
+                    </p>
+                    <p
+                      style={{
+                        marginLeft: "5px",
+                        width: "25px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {" "}
+                      0
+                    </p>
+                  </div>
+                </div>
               </div>
-              <p>{Message.tweet}</p>
-            </div>
-            <div >
-            <RiDeleteBin5Fill onClick={() => {handleDeleteTweet}} size={20} style={{cursor:"pointer", width:'25px'}}/>
-            <RiHeart2Fill size={20} style={{cursor:"pointer", width:'25px'}}/>
-            </div>
-          </div>
-        ))}
+            ))
+          : ""}
       </div>
     );
   });
