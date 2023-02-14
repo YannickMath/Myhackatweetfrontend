@@ -108,12 +108,10 @@ export default function Welcome() {
   };
 
   // console.log("TWEETS.TWEET", tweets);
-  const handleLikeTweet = async (idTweet) => {
-    const userId = tweets.map((e) => e._id);
-
+  const handleLikeTweet = async (userId, tweetId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/likeTweet/${userId[0]}/${idTweet}`,
+        `http://localhost:3000/tweets/likeTweet/${userId}/${tweetId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -123,24 +121,17 @@ export default function Welcome() {
         throw new Error("Failed to like tweet");
       }
 
-      const data = await response.json();
-      // console.log("DATA", data);
-      if (response.ok) {
-        fetchData();
-      } else {
-        throw new Error("Failed to like tweet to the store");
-      }
+      fetchData();
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleDislikeTweet = async (idTweet) => {
-    const userId = tweets.map((e) => e._id);
+  const handleDislikeTweet = async (tweetId, userId) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/dislikeTweet/${userId[0]}/${idTweet}`,
+        `http://localhost:3000/tweets/dislikeTweet/${userId}/${tweetId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -151,7 +142,7 @@ export default function Welcome() {
       }
 
       const data = await response.json();
-      // console.log("DATA", data);
+      console.log("userId", userId);
       if (response.ok) {
         fetchData();
       } else {
@@ -163,31 +154,26 @@ export default function Welcome() {
   };
 
   const tweetView = tweets.map((tweet, i) => {
-    // console.log("TWEETRED", tweetView.tweet);
-    console.log("TWEETS", typeof tweet);
-    // console.log('LIKECOUNT', Message.like.likecount)
 
-    // console.log('MESSAGE', Message.like)
     return (
       <div key={i} className={styles.tweetContainer}>
         {tweet.tweet.length > 0
           ? tweet.tweet.map((Message, j) => (
-            
-            <div key={j}>
+              <div key={j}>
                 <div className={styles.topPartTweet}>
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <img
                       className={styles.eggPicture}
                       src="tweet.jpg"
                       alt="egg tweeter"
-                      />
+                    />
                     <p
                       style={{
                         fontSize: "25px",
                         fontWeight: "bold",
                         marginLeft: "5px",
                       }}
-                      >
+                    >
                       {tweet.firstname}
                     </p>
                     <p style={{ fontSize: "18px", marginLeft: "5px" }}>
@@ -205,19 +191,21 @@ export default function Welcome() {
                       wordWrap: "break-word",
                       marginRight: "15px",
                     }}
-                    >
+                  >
                     {Message.tweet}
                   </p>
-                  {console.log('Message',Message)}
+                  {console.log("Message", Message)}
                 </div>
                 <div style={{ margin: "10px" }}>
                   <RiDeleteBin5Fill
                     onClick={() => handleDeleteTweet(Message.tweet)}
                     style={{ cursor: "pointer", width: "25px" }}
                     size={20}
-                    />
+                  />
                   <AiFillLike
-                    onClick={() => handleLikeTweet(Message._id)}
+                    onClick={() =>
+                      handleLikeTweet(tweet._id, Message._id)
+                    }
                     size={20}
                     style={{
                       color: "white",
@@ -226,14 +214,15 @@ export default function Welcome() {
                     }}
                   />
                   <AiFillDislike
-                    onClick={() => handleDislikeTweet(Message._id)}
+                    onClick={() => handleDislikeTweet(Message._id, tweet._id)}
                     size={20}
                     style={{
                       color: "white",
                       cursor: "pointer",
                       width: "25px",
                     }}
-                  />
+                    />
+                    {console.log('TWEETUSER', tweet.userId )}
                   <div style={{ display: "flex", marginLeft: "25px" }}>
                     <p
                       style={{
@@ -243,15 +232,15 @@ export default function Welcome() {
                         alignItems: "center",
                         color: "white",
                       }}
-                    >0
+                    >
+                      0
                       {/* {Message.like.map((like, k) => (
                   <span key={k}>{like.likeCount}</span>
                 ))} */}
                       {Message.like.likeCount}
-                      {console.log('MESS.LIKE',Message.like.likeCount)}
+                      {console.log("MESS.LIKE", Message.like.likeCount)}
                       {/* {console.log('MESS.LIKEID',Message.like[0]._id)} */}
-                      {/* {console.log('MESS.LIKCOUNT',Message.like.likeCount)} */} 
-
+                      {/* {console.log('MESS.LIKCOUNT',Message.like.likeCount)} */}
                     </p>
                     <p
                       style={{
@@ -260,14 +249,14 @@ export default function Welcome() {
                         justifyContent: "center",
                         alignItems: "center",
                         color: "white",
-
                       }}
-                    >0
+                    >
+                      0
                       {/* {Message.dislike.map((dislike, k) => (
                   <span key={k}>{dislike.dislikeCount}</span>
                 ))} */}
                       {Message.dislike.dislikeCount}
-                      {console.log('MESS.DISLIKE',Message.dislike._id)}
+                      {console.log("MESS.DISLIKE", Message.dislike._id)}
                     </p>
                   </div>
                 </div>
