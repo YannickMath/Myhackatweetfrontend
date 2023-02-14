@@ -244,7 +244,14 @@ export default function Welcome() {
                         color: "white",
                       }}
                     >0
-                      {Message.like[0].likeCount}
+                      {/* {Message.like.map((like, k) => (
+                  <span key={k}>{like.likeCount}</span>
+                ))} */}
+                      {Message.like.likeCount}
+                      {console.log('MESS.LIKE',Message.like.likeCount)}
+                      {/* {console.log('MESS.LIKEID',Message.like[0]._id)} */}
+                      {/* {console.log('MESS.LIKCOUNT',Message.like.likeCount)} */} 
+
                     </p>
                     <p
                       style={{
@@ -256,7 +263,11 @@ export default function Welcome() {
 
                       }}
                     >0
-                      {Message.dislike[0].dislikeCount}
+                      {/* {Message.dislike.map((dislike, k) => (
+                  <span key={k}>{dislike.dislikeCount}</span>
+                ))} */}
+                      {Message.dislike.dislikeCount}
+                      {console.log('MESS.DISLIKE',Message.dislike._id)}
                     </p>
                   </div>
                 </div>
