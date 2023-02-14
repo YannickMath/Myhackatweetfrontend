@@ -108,10 +108,10 @@ export default function Welcome() {
   };
 
   // console.log("TWEETS.TWEET", tweets);
-  const handleLikeTweet = async (userId, tweetId) => {
+  const handleLikeTweet = async (salade, tomtateoignon) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/likeTweet/${userId}/${tweetId}`,
+        `http://localhost:3000/tweets/likeTweet/${salade}/${tomtateoignon}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -128,7 +128,6 @@ export default function Welcome() {
   };
 
   const handleDislikeTweet = async (tweetId, userId) => {
-
     try {
       const response = await fetch(
         `http://localhost:3000/tweets/dislikeTweet/${userId}/${tweetId}`,
@@ -154,7 +153,6 @@ export default function Welcome() {
   };
 
   const tweetView = tweets.map((tweet, i) => {
-
     return (
       <div key={i} className={styles.tweetContainer}>
         {tweet.tweet.length > 0
@@ -194,21 +192,17 @@ export default function Welcome() {
                   >
                     {Message.tweet}
                   </p>
-                  {console.log("Message", Message)}
                 </div>
                 <div style={{ margin: "10px" }}>
-                  <RiDeleteBin5Fill
-                    onClick={() => handleDeleteTweet(Message.tweet)}
-                    style={{ cursor: "pointer", width: "25px" }}
-                    size={20}
-                  />
+                  
+
                   <AiFillLike
-                    onClick={() =>
-                      handleLikeTweet(tweet._id, Message._id)
-                    }
+                    onClick={() => handleLikeTweet(tweet._id, Message._id)}
                     size={20}
                     style={{
-                      color: "white",
+                      color:
+                        Message.dislike.dislikeCount >= 1 ? "#DBEEB6" : "white",
+
                       cursor: "pointer",
                       width: "25px",
                     }}
@@ -219,10 +213,23 @@ export default function Welcome() {
                     style={{
                       color: "white",
                       cursor: "pointer",
-                      width: "25px",
+                      color:
+                        Message.dislike.dislikeCount >= 1 ? "#F08C9E" : "white",
                     }}
+                  />
+                  {tweet.token === userRed.token && (
+                    <RiDeleteBin5Fill
+                      onClick={() => handleDeleteTweet(Message.tweet)}
+                      style={{
+                        cursor: "pointer",
+                        width: "25px",
+                        color: "#ffffff",
+                        marginLeft: '10px'
+                      }}
+                      size={20}
                     />
-                    {console.log('TWEETUSER', tweet.userId )}
+                  )}
+                  {console.log("TWEETUSER", tweet.userId)}
                   <div style={{ display: "flex", marginLeft: "25px" }}>
                     <p
                       style={{
@@ -233,14 +240,8 @@ export default function Welcome() {
                         color: "white",
                       }}
                     >
-                      0
-                      {/* {Message.like.map((like, k) => (
-                  <span key={k}>{like.likeCount}</span>
-                ))} */}
                       {Message.like.likeCount}
                       {console.log("MESS.LIKE", Message.like.likeCount)}
-                      {/* {console.log('MESS.LIKEID',Message.like[0]._id)} */}
-                      {/* {console.log('MESS.LIKCOUNT',Message.like.likeCount)} */}
                     </p>
                     <p
                       style={{
@@ -251,12 +252,7 @@ export default function Welcome() {
                         color: "white",
                       }}
                     >
-                      0
-                      {/* {Message.dislike.map((dislike, k) => (
-                  <span key={k}>{dislike.dislikeCount}</span>
-                ))} */}
                       {Message.dislike.dislikeCount}
-                      {console.log("MESS.DISLIKE", Message.dislike._id)}
                     </p>
                   </div>
                 </div>
@@ -334,7 +330,12 @@ export default function Welcome() {
         </div>
         <div className={styles.middleBottomContainer}>{tweetView}</div>
       </div>
-      <div className={styles.rightContainer}></div>
+      <div className={styles.rightContainer}>
+        <div>
+          <p>Trends</p>
+        </div>
+        <div className={styles.hashtagContainer}>hello</div>
+      </div>
     </div>
   );
 }
