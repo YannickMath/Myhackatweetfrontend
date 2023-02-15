@@ -69,7 +69,7 @@
 .rightContainer {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-start;
   width: 30%;
   height: 100%;
@@ -154,7 +154,7 @@
 }
 
 .topPartTweet {
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   width: 49vw;
   padding: 5px;
