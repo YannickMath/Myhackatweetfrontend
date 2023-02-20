@@ -2,11 +2,13 @@ import styles from "../styles/Welcome.module.css";
 import { useRouter } from "next/router";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
+import { BsLightningFill } from "react-icons/bs";
 import { useState } from "react";
 import { logout } from "@/reducers/user.slice";
 import { useEffect } from "react";
-import { AiFillDislike, AiFillLike } from "react-icons/ai";
-import { RiDeleteBin5Fill } from "react-icons/ri";
+
+import React from "react";
+import Tweet from "../components/Tweet";
 
 export default function Welcome() {
   // Router hook
@@ -20,9 +22,30 @@ export default function Welcome() {
   const tweetRed = useSelector((state) => state.tweet.value);
 
   // State for tweet and count
+  //Etat pour compter le nombre de hashtag
   const [count, setCount] = useState(0);
+  const [hashtagCopy, setHashtagCopy] = useState([]);
+
+  //Etat pour charger tous les hashtags au chargement de la page
+  const [hashtag, setHashtag] = useState([]);
+  //ETat pour charger l'input du nouveau tweet posté
   const [newTweet, setNewTweet] = useState("");
+  //Etat pour charger les user au chargement de lapage
   const [tweets, setTweets] = useState([]);
+  //Etat pour compter le nombre de hashtag
+  const [clickHashtag, setClickHashtag] = useState(false);
+  const [clickNameHash, setClickNameHash] = useState("");
+
+  const [isLightMode, setIsLightMode] = useState(false);
+
+  {
+  }
+
+  const handleThemeChange = () => {
+    console.log("themechanger");
+    console.log("themechanger.Value", isLightMode);
+    setIsLightMode(!isLightMode);
+  };
 
   const fetchData = async () => {
     try {
@@ -30,6 +53,15 @@ export default function Welcome() {
       const data = await response.json();
       if (data.result) {
         setTweets(data.user);
+        const regex = /#\S+\b/g;
+        const tags = data.user.flatMap((tweet) =>
+          tweet.tweet.flatMap((message) => {
+            const match = message.tweet.match(regex);
+            return match ? match : [];
+          })
+        );
+        setHashtag([...new Set(tags)]);
+        setHashtagCopy(tags.filter((tag) => tag !== null));
       }
     } catch (error) {
       console.error(error);
@@ -37,8 +69,16 @@ export default function Welcome() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (userRed.token) {
+      fetchData();
+    }
+  }, [userRed.token]);
+
+
+  const handleClickNameHash = (hash) => {
+    setClickHashtag(true);
+    setClickNameHash(hash);
+  };
 
   // Handle input change
   const handleChange = (e) => {
@@ -48,8 +88,6 @@ export default function Welcome() {
     }
   };
 
-  // Handle tweet
-  // console.log("TWEETS", tweets);
   const handleTweet = async () => {
     try {
       const response = await fetch(
@@ -66,7 +104,7 @@ export default function Welcome() {
         throw new Error("Failed to post tweet");
       }
 
-      const data = await response.json();
+      await response.json();
       if (response.ok) {
         setNewTweet("");
         setCount(0);
@@ -77,6 +115,10 @@ export default function Welcome() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleCloseHashtag = () => {
+    setClickHashtag(false);
   };
 
   const handleLogout = () => {
@@ -95,8 +137,6 @@ export default function Welcome() {
           },
         }
       );
-      console.log("TOKEN", token);
-      console.log("TWEETID", tweetId);
 
       const data = await response.json();
       if (data.result) {
@@ -108,8 +148,6 @@ export default function Welcome() {
       console.error(err);
     }
   };
-
-  // console.log('TWEET.TOKEN', token)
 
   const handleLikeTweet = async (token, tweetId) => {
     if (token === userRed.token) {
@@ -152,7 +190,6 @@ export default function Welcome() {
       }
 
       const data = await response.json();
-      // console.log("userId", userId);
       if (response.ok) {
         fetchData();
       } else {
@@ -163,163 +200,52 @@ export default function Welcome() {
     }
   };
 
-  const tweetView = tweets.map((tweet, i) => {
-    return (
-      <div key={i} className={styles.tweetContainer}>
-        {tweet.tweet.length > 0
-          ? tweet.tweet.map((Message, j) => {
-              const hashtagRegex = /[^\s]*/g;
-              const hashtags = Message.tweet.match(hashtagRegex);
-              const hashtagArray = [];
+  function countIdenticalStrings(arr, str) {
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === str) {
+        count++;
+      }
+    }
+    return count;
+  }
 
-              return (
-                <div key={j}>
-                  <div className={styles.topPartTweet}>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <img
-                        className={styles.eggPicture}
-                        src="tweet.jpg"
-                        alt="egg tweeter"
-                      />
-                      <p
-                        style={{
-                          fontSize: "25px",
-                          fontWeight: "bold",
-                          marginLeft: "5px",
-                        }}
-                      >
-                        {tweet.firstname}
-                      </p>
-                      <p style={{ fontSize: "18px", marginLeft: "5px" }}>
-                        @{tweet.username}
-                      </p>
-                    </div>
-                    <p
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        fontSize: "18px",
-                        marginLeft: "10px",
-                        height: "6vh",
-                        wordWrap: "break-word",
-                        marginRight: "15px",
-                      }}
-                    >
-                      {hashtags
-                        ? Message.tweet.split(hashtagRegex).map((part, k) => {
-                            {
-                              console.log(
-                                "ARRAYPUSH",
-                                hashtagArray.push(hashtags)
-                              );
-                              console.log("hashtagArray", hashtagArray);
-                              console.log(
-                                "MSG.TWEET.SPLIT.#REGEX",
-                                Message.tweet.split(hashtagRegex)
-                              );
-                              console.log("HASHTAG", hashtags);
-                              console.log("PART", part);
-                            }
-                            if (hashtags.includes(part)) {
-                              return (
-                                <a
-                                  key={k}
-                                  href={`/hashtag/${part.substring(1)}`}
-                                  style={{ color: "yellow" }}
-                                >
-                                  {console.log("TWEET.TOKEN", tweet.token)}
-                                  {part}
-                                </a>
-                              );
-                            } else {
-                              return part;
-                            }
-                          })
-                        : Message.tweet}
-                    </p>
-                  </div>
-                  <div style={{ margin: "15px" }}>
-                    <AiFillLike
-                      onClick={() => handleLikeTweet(tweet.token, Message._id)}
-                      size={20}
-                      style={{
-                        color: Message.like.likeCount > 0 ? "#DBEEB6" : "white",
-                        cursor: "pointer",
-                        width: "30px",
-                      }}
-                    />
-                    {console.log("BTC", Message.dislike.dislikeCount)}
-                    <AiFillDislike
-                      onClick={() => handleDislikeTweet(tweet.token, Message._id)}
-                      size={20}
-                      style={{
-                        width: "30px",
-                        color: "white",
-                        cursor: "pointer",
-                        color:
-                          Message.dislike.dislikeCount > 0
-                            ? "#F08C9E"
-                            : "white",
-                      }}
-                    />
-                    {tweet.token === userRed.token && (
-                      <RiDeleteBin5Fill
-                        onClick={() =>
-                          handleDeleteTweet(tweet.token, Message._id)
-                        }
-                        style={{
-                          cursor: "pointer",
-                          width: "25px",
-                          color: "#ffffff",
-                          marginLeft: "10px",
-                        }}
-                        size={20}
-                      />
-                    )}
-                    <div style={{ display: "flex" }}>
-                      <p
-                        style={{
-                          marginLeft: "5px",
-                          width: "25px",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          color: "white",
-                        }}
-                      >
-                        {Message.like.likeCount}
-                      </p>
-                      <p
-                        style={{
-                          marginLeft: "5px",
-                          width: "25px",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          color: "white",
-                        }}
-                      >
-                        {Message.dislike.dislikeCount}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          : ""}
-      </div>
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" ) {
+      handleTweet();
+    }
+  };
+
+  const sortedTweets = (tweets) => {
+    return tweets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  };
+
+  const tweetView = sortedTweets(tweets).map((tweet, i) => {
+    return (
+      <Tweet
+        key={i}
+        tweet={tweet}
+        clickNameHash={clickNameHash}
+        clickHashtag={clickHashtag}
+        handleDislikeTweet={handleDislikeTweet}
+        handleLikeTweet={handleLikeTweet}
+        handleDeleteTweet={handleDeleteTweet}
+      />
     );
   });
 
   return (
-    <div className={styles.main}>
+    // <div className={isLightMode & "light"}>
+    // <div className={isLightMode ? "light" : "main"}>
+    <div className={styles.main} style={{color: isLightMode ? "black" : "black", backgroundColor: isLightMode ? "#2C74F9" : "black", border: isLightMode ? "solid 5px gray" : "black"}}>
       <div className={styles.leftContainer}>
         <div className={styles.logoTweeter}>
           <AiOutlineTwitter
-            color="white"
             size={70}
             style={{
               transform: "rotate(180deg)",
               position: "absolute",
+             color: isLightMode ? "black" : "white", 
             }}
           />
         </div>
@@ -333,8 +259,8 @@ export default function Welcome() {
           </div>
           <div className={styles.leftContainerBottomPart1}>
             <div className={styles.leftLastBox}>
-              <div className={styles.userName}>{userRed.firstname}</div>
-              <div className={styles.hashtagName}>@{userRed.username}</div>
+              <div className={styles.userName} style={{color: isLightMode ? "black" : "white" }}>{userRed.firstname}</div>
+              <div className={styles.hashtagName} style={{color: isLightMode ? "black" : "white" }}>@{userRed.username}</div>
             </div>
           </div>
         </div>
@@ -347,42 +273,88 @@ export default function Welcome() {
       <div className={styles.middleContainer}>
         <div className={styles.middleTopContainer}>
           <div>
-            <h3>Home</h3>
+            <h3 style={{color: isLightMode ? "black" : "white"}}>{!clickHashtag ? "Home" : `${clickNameHash}`}</h3>
+            {clickHashtag && (
+              <p onClick={handleCloseHashtag} style={{ cursor: "pointer" }}>
+                x
+              </p>
+            )}
           </div>
-          <div className={styles.tweetInput}>
+          <div className={styles.tweetInput} >
             <input
+              onKeyDown={handleKeyDown}
               value={newTweet}
               onChange={handleChange}
               type="text"
-              placeholder="What's up ?"
-              style={{
-                border: "none",
-                borderBottom: "2px solid gray",
-                padding: "8px",
-                fontSize: "16px",
-                outline: "none",
-                backgroundColor: "black",
-                width: "600px",
-                marginLeft: "55px",
-                color: "#ffffff",
-              }}
+              placeholder={!clickHashtag ? "What's up ?" : ""}
+              className={styles.msgTweet}
+              style={{color: isLightMode ? "white" : "black", backgroundColor: isLightMode ? "black" : "white", borderRadius: "20px"}}
             />
           </div>
           <div className={styles.tweetCaracters}>
-            <span className={styles.spanCount}>{count}/280</span>
-            <button className={styles.BtnTweet} onClick={() => handleTweet()}>
-              Tweet
-            </button>
+            <span className={styles.spanCount} style={{color: isLightMode ? "black" : "white"}}>
+              {!clickHashtag ? count : ""}
+              {!clickHashtag ? "/280" : ""}
+            </span>
+            {!clickHashtag ? (
+              <button className={styles.BtnTweet} onClick={() => handleTweet()}>
+                Tweet
+              </button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div className={styles.middleBottomContainer}>{tweetView}</div>
       </div>
       <div className={styles.rightContainer}>
-        <div>
-          <p>Trends</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "80%",
+            alignItems: "center",
+          }}
+        >
+          <h3 style={{color: isLightMode ? "black" : "white"}}>Trends</h3>
+          <BsLightningFill
+            style={{ cursor: "pointer", color: isLightMode ? "black" : "white" }}
+            size={20}
+            onClick={handleThemeChange}
+          />
         </div>
-        <div className={styles.hashtagContainer}>hello</div>
+
+        <div className={styles.hashtagContainer}>
+          {hashtag.map((e, i) => {
+            let hash = e?.substring(0);
+            const count = countIdenticalStrings(hashtagCopy, e);
+
+            return (
+              <div key={i} className={styles.hashPostContainer}>
+                <a
+                  // href={hash}
+                  style={{
+                    textDecoration: "none",
+                    color: "#000",
+                    cursor: "pointer",
+                  }}
+                >
+                  <h3
+                    onClick={() => handleClickNameHash(hash)}
+                    style={{ color: "#ffffff", fontSize: "25px" }}
+                  >
+                    {e}
+                  </h3>
+                </a>
+                <p style={{ color: "gray" }}>
+                  {count ? `${count} tweets` : `${count} tweet`}
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
+    // </div>
   );
 }
