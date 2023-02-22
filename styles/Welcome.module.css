@@ -1,3 +1,5 @@
+
+
 .main {
   background-color: black;
   color: #ffffff;
@@ -6,8 +8,8 @@
   padding: 0;
   justify-content: center;
   align-items: center;
-  width: 98vw;
-  height: 98vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 
@@ -101,6 +103,12 @@
   height: 50px;
   margin: 5px;
 }
+.eggPicture2 {
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+}
 .middleTopContainer {
   height: 20vh;
   display: flex;
@@ -158,10 +166,13 @@
 .topPartTweet {
   justify-content: flex-start;
   align-items: center;
-  width: 49vw;
+  width: 50vw;
+  height: 50px;
   padding: 5px;
   border: solid 1px gray;
   border-bottom: none;
+  border-left: none;
+  border-right: none;
 }
 
 .hashtagContainer {
@@ -201,6 +212,7 @@
   width: 600px;
   margin-left: 55px;
   color: black;
+  /* word-wrap: break-word; */
 }
 
 .like {
@@ -228,4 +240,10 @@
 
 .tweetDate {
   color: #ffffff;
+}
+
+.tweetContainer{
+  /* margin: -5px; */
+  max-width: 49vw;
+
 }

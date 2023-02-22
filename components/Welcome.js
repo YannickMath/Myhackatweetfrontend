@@ -1,12 +1,12 @@
 import styles from "../styles/Welcome.module.css";
 import { useRouter } from "next/router";
 import { AiOutlineTwitter } from "react-icons/ai";
+import { AiFillBackward } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { BsLightningFill } from "react-icons/bs";
 import { useState } from "react";
 import { logout } from "@/reducers/user.slice";
 import { useEffect } from "react";
-
 import React from "react";
 import Tweet from "../components/Tweet";
 
@@ -42,11 +42,9 @@ export default function Welcome() {
   }
 
   const handleThemeChange = () => {
-    console.log("themechanger");
-    console.log("themechanger.Value", isLightMode);
     setIsLightMode(!isLightMode);
   };
-
+console.log('HASHTAG', hashtag)
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:3000/tweets");
@@ -54,12 +52,19 @@ export default function Welcome() {
       if (data.result) {
         setTweets(data.user);
         const regex = /#\S+\b/g;
-        const tags = data.user.flatMap((tweet) =>
-          tweet.tweet.flatMap((message) => {
-            const match = message.tweet.match(regex);
-            return match ? match : [];
+        const tags = data.user
+        .map((tweet) => tweet.tweet.tweet)
+          .flat()
+          .map((message) => {
+            if (typeof message === "string") {
+              const match = message.match(regex);
+              return match ? match : [];
+            } else {
+              return [];
+            }
+            
           })
-        );
+          .flat();
         setHashtag([...new Set(tags)]);
         setHashtagCopy(tags.filter((tag) => tag !== null));
       }
@@ -67,6 +72,8 @@ export default function Welcome() {
       console.error(error);
     }
   };
+  
+  console.log("TWEETS",tweets)
 
   useEffect(() => {
     if (userRed.token) {
@@ -74,7 +81,7 @@ export default function Welcome() {
     }
   }, [userRed.token]);
 
-
+  //fonction qui detecte si un hashtag est clické : true/false et nom du hashtag
   const handleClickNameHash = (hash) => {
     setClickHashtag(true);
     setClickNameHash(hash);
@@ -86,6 +93,7 @@ export default function Welcome() {
       setNewTweet(e.target.value);
       setCount(e.target.value.length);
     }
+   
   };
 
   const handleTweet = async () => {
@@ -211,16 +219,16 @@ export default function Welcome() {
   }
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" ) {
+    if (e.key === "Enter") {
       handleTweet();
     }
   };
 
-  const sortedTweets = (tweets) => {
-    return tweets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  };
+  // const sortedTweets = (tweets) => {
+  //   return tweets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  // };
 
-  const tweetView = sortedTweets(tweets).map((tweet, i) => {
+  const tweetView = tweets.map((tweet, i) => {
     return (
       <Tweet
         key={i}
@@ -230,6 +238,7 @@ export default function Welcome() {
         handleDislikeTweet={handleDislikeTweet}
         handleLikeTweet={handleLikeTweet}
         handleDeleteTweet={handleDeleteTweet}
+        isLightMode={isLightMode}
       />
     );
   });
@@ -237,7 +246,14 @@ export default function Welcome() {
   return (
     // <div className={isLightMode & "light"}>
     // <div className={isLightMode ? "light" : "main"}>
-    <div className={styles.main} style={{color: isLightMode ? "black" : "black", backgroundColor: isLightMode ? "#2C74F9" : "black", border: isLightMode ? "solid 5px gray" : "black"}}>
+    <div
+      className={styles.main}
+      style={{
+        color: isLightMode ? "black" : "black",
+        backgroundColor: isLightMode ? "#ffffff" : "black",
+        border: isLightMode ? "solid 5px gray" : "black",
+      }}
+    >
       <div className={styles.leftContainer}>
         <div className={styles.logoTweeter}>
           <AiOutlineTwitter
@@ -245,7 +261,7 @@ export default function Welcome() {
             style={{
               transform: "rotate(180deg)",
               position: "absolute",
-             color: isLightMode ? "black" : "white", 
+              color: isLightMode ? "black" : "white",
             }}
           />
         </div>
@@ -259,8 +275,18 @@ export default function Welcome() {
           </div>
           <div className={styles.leftContainerBottomPart1}>
             <div className={styles.leftLastBox}>
-              <div className={styles.userName} style={{color: isLightMode ? "black" : "white" }}>{userRed.firstname}</div>
-              <div className={styles.hashtagName} style={{color: isLightMode ? "black" : "white" }}>@{userRed.username}</div>
+              <div
+                className={styles.userName}
+                style={{ color: isLightMode ? "black" : "white" }}
+              >
+                {userRed.firstname}
+              </div>
+              <div
+                className={styles.hashtagName}
+                style={{ color: isLightMode ? "black" : "white" }}
+              >
+                @{userRed.username}
+              </div>
             </div>
           </div>
         </div>
@@ -270,17 +296,33 @@ export default function Welcome() {
           </button>
         </div>
       </div>
-      <div className={styles.middleContainer}>
+      <div
+        className={styles.middleContainer}
+        style={{ borderColor: isLightMode ? "black" : "gray" }}
+      >
         <div className={styles.middleTopContainer}>
           <div>
-            <h3 style={{color: isLightMode ? "black" : "white"}}>{!clickHashtag ? "Home" : `${clickNameHash}`}</h3>
+            <h3 style={{ color: isLightMode ? "black" : "white" }}>
+              {!clickHashtag ? "Home" : `${clickNameHash}`}
+            </h3>
             {clickHashtag && (
-              <p onClick={handleCloseHashtag} style={{ cursor: "pointer" }}>
-                x
-              </p>
+              <div>
+                <AiFillBackward
+                  onClick={handleCloseHashtag}
+                  style={{
+                    paddingLeft: "5px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "18px",
+                    width: "20px",
+                    cursor: "pointer",
+                    color: isLightMode ? "black" : "white",
+                  }}
+                />
+              </div>
             )}
           </div>
-          <div className={styles.tweetInput} >
+          <div className={styles.tweetInput}>
             <input
               onKeyDown={handleKeyDown}
               value={newTweet}
@@ -288,11 +330,18 @@ export default function Welcome() {
               type="text"
               placeholder={!clickHashtag ? "What's up ?" : ""}
               className={styles.msgTweet}
-              style={{color: isLightMode ? "white" : "black", backgroundColor: isLightMode ? "black" : "white", borderRadius: "20px"}}
+              style={{
+                color: isLightMode ? "white" : "black",
+                backgroundColor: isLightMode ? "white" : "white",
+                borderRadius: "20px",
+              }}
             />
           </div>
           <div className={styles.tweetCaracters}>
-            <span className={styles.spanCount} style={{color: isLightMode ? "black" : "white"}}>
+            <span
+              className={styles.spanCount}
+              style={{ color: isLightMode ? "black" : "white" }}
+            >
               {!clickHashtag ? count : ""}
               {!clickHashtag ? "/280" : ""}
             </span>
@@ -316,9 +365,12 @@ export default function Welcome() {
             alignItems: "center",
           }}
         >
-          <h3 style={{color: isLightMode ? "black" : "white"}}>Trends</h3>
+          <h3 style={{ color: isLightMode ? "black" : "white" }}>Trends</h3>
           <BsLightningFill
-            style={{ cursor: "pointer", color: isLightMode ? "black" : "white" }}
+            style={{
+              cursor: "pointer",
+              color: isLightMode ? "black" : "white",
+            }}
             size={20}
             onClick={handleThemeChange}
           />
