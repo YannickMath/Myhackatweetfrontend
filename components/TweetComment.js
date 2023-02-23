@@ -8,7 +8,7 @@ const setModal = props.setModal
     }
     return (
         <div className={styles.main}>
-            HELLO
+            Be respectfull and kind ! We are all together !
             <p style={{cursor: "pointer"}} onClick={handleCloseComment}>x</p>
         </div>
     )

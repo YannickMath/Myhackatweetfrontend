@@ -9,6 +9,7 @@ import { logout } from "@/reducers/user.slice";
 import { useEffect } from "react";
 import React from "react";
 import Tweet from "../components/Tweet";
+import UploadImage from "./UploadImage";
 
 export default function Welcome() {
   // Router hook
@@ -224,9 +225,7 @@ console.log('HASHTAG', hashtag)
     }
   };
 
-  // const sortedTweets = (tweets) => {
-  //   return tweets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  // };
+
 
   const tweetView = tweets.map((tweet, i) => {
     return (
@@ -244,8 +243,6 @@ console.log('HASHTAG', hashtag)
   });
 
   return (
-    // <div className={isLightMode & "light"}>
-    // <div className={isLightMode ? "light" : "main"}>
     <div
       className={styles.main}
       style={{
@@ -262,28 +259,43 @@ console.log('HASHTAG', hashtag)
               transform: "rotate(180deg)",
               position: "absolute",
               color: isLightMode ? "black" : "white",
+              marginTop: "12px",
+              marginLeft: "12px"
+
             }}
           />
         </div>
-        <div className={styles.leftContainerBottomPart}>
-          <div>
-            <img
+        <div className={styles.leftContainerBottomPart} style={{
+             display: "flex",
+            //  flexDirection: "column",
+             justifyContent: "center",
+             alignItems: "flex-end",
+             height: "500px",
+             marginBottom: "40px"
+          
+            }}>
+          <div  >
+            <UploadImage
+            
+           />
+            {/* <img
               src="tweet.jpg"
               alt="egg tweeter"
               className={styles.eggPicture}
-            />
+            /> */}
           </div>
           <div className={styles.leftContainerBottomPart1}>
             <div className={styles.leftLastBox}>
               <div
-                className={styles.userName}
-                style={{ color: isLightMode ? "black" : "white" }}
+                className={styles.firstName}
+                style={{ color: isLightMode && "black", marginLeft: "15px",fontSize: "23px" }}
               >
                 {userRed.firstname}
+                {console.log("userredfirstname", userRed.firstname)}
               </div>
               <div
-                className={styles.hashtagName}
-                style={{ color: isLightMode ? "black" : "white" }}
+                className={styles.userName}
+                style={{ color: isLightMode ? "black" : "white", marginLeft: "15px",fontSize: "20px" }}
               >
                 @{userRed.username}
               </div>

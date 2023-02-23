@@ -2,13 +2,14 @@ import { useState } from "react";
 import styles from "../styles/Modal.module.css";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/reducers/user.slice";
+import { useDeferredValue } from "react";
 
 export default function ModalSignin({ setModalSignin }) {
   const router = useRouter();
   const dispatch = useDispatch();
-
+const userRed = useSelector((state) => state.user.vlaue)
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -28,11 +29,13 @@ export default function ModalSignin({ setModalSignin }) {
         console.log('TOKEN', data.user.token)
         dispatch(
           login({
+            firstname: data.user.firstname,
             username: inputUsername,
             password: inputPassword,
             token: data.user.token,
           })
-        );
+          );
+          console.log("datauserfirstname",data.user.firstname)
 
         router.push("/welcome");
       } else {
