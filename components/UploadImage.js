@@ -5,16 +5,13 @@ import { useEffect } from "react";
 import { photo } from "@/reducers/user.slice";
 
 export default function UploadImage(props) {
-  const [imageUrl, setImageUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [profilePicture, setProfilePicture] = useState("");
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
   const isLightMode = props.isLightMode;
 
-  // console.log("USERREDFOTO", userRed.photo);
-  console.log("IMAGEURL", imageUrl);
-  // console.log("uploading", uploading);
+ 
 
   const handleUpload = async (event) => {
     const file = event.target.files[0];
@@ -37,7 +34,7 @@ export default function UploadImage(props) {
         console.log("RESPONSE", imageResponse);
 
         if (imageResponse.result) {
-          setImageUrl(imageResponse.user.photo);
+          setProfilePicture(imageResponse.user.photo);
           dispatch(photo(imageResponse.user.photo));
         } else {
           throw new Error("Error uploading image");
@@ -69,81 +66,77 @@ export default function UploadImage(props) {
     }
   };
 
-  console.log("PROFILEPICTURE", profilePicture);
 
   useEffect(() => {
     fetchPhoto();
   }, [token]);
 
-  return (
-    <div
+return (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      position: "relative",
+      backgroundColor: "gray",
+      width: "100px",
+      height: "100px",
+      borderRadius: "50%",
+      border: "1px solid",
+      borderColor: isLightMode ? "black" : "white",
+      overflow: "hidden",
+    }}
+  >
+    {profilePicture ? (
+      <>
+        <img
+          src={profilePicture}
+          alt=""
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
+      </>
+    ) : (
+      <div style={{ width: "100%", height: "100%" }}></div>
+    )}
+    <label
+      htmlFor="file-upload"
       style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "relative",
-        backgroundColor: "gray",
-        width: "100px",
-        height: "100px",
+        position: "absolute",
+        top: "0",
+        left: "50%",
+        transform: "translate(-50%, 260%)",
+        backgroundColor: isLightMode ? "black" : "white",
         borderRadius: "50%",
-        border: "1px solid",
-        borderColor: isLightMode ? "black" : "white",
-        overflow: "hidden",
+        padding: "0.2rem",
+        cursor: "pointer",
+        zIndex: "1",
       }}
     >
-      {profilePicture ? (
-        <>
-          <img
-            src={profilePicture}
-            alt="Uploaded"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-          <label
-            htmlFor="file-upload"
-            style={{
-              position: "absolute",
-              bottom: "0",
-              left: "50%",
-              transform: "translate(-50%, 50%)",
-              backgroundColor: isLightMode ? "black" : "white",
-              borderRadius: "50%",
-              padding: "0.2rem",
-              cursor: "pointer",
-            }}
-          >
-            <AiFillCamera
-              size={30}
-              style={{
-                color: isLightMode ? "white" : "black",
-              }}
-            />
-          </label>
-        </>
-      ) : (
-        
-        <label htmlFor="file-upload">
-          <AiFillCamera
-            size={30}
-            style={{
-              color: isLightMode ? "black" : "white",
-              cursor: "pointer",
-            }}
-          />
-        </label>
-      )}
-      <input
-        id="file-upload"
-        type="file"
-        name="file"
-        disabled={uploading}
-        onChange={handleUpload}
-        style={{ display: "none" }}
+      <AiFillCamera
+        size={20}
+        style={{
+          color: isLightMode ? "white" : "black",
+        }}
       />
-    </div>
-  );
+    </label>
+    <input
+      id="file-upload"
+      type="file"
+      name="file"
+      disabled={uploading}
+      onChange={handleUpload}
+      style={{ display: "none" }}
+    />
+  </div>
+);
+
+  
+
+
+
   
 }

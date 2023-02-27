@@ -49,6 +49,7 @@
   height: 8%;
   font-weight: bold;
   cursor: pointer;
+   transition: transform 0.5s ease;
 }
 
 .BtnSignup:hover {

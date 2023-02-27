@@ -1,41 +1,66 @@
 .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* align-items: center; */
-    width: 40vw;
-    height: 58vh;
-    background-color: rgb(24, 24, 24);
-    color: #ffffff;
-    border: solid 2px #ffffff;
-    position: fixed;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: flex-start;
+  width: 40vw;
+  height: 58vh;
+  background-color: rgb(24, 24, 24);
+  color: #ffffff;
+  border: solid 2px #ffffff;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  /* align-items: center; */
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  animation: animModal 600ms ease-in-out;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding: 15px;
+}
+
+.commentTweet {
+  /* width: 35vw;
+    color: rebeccapurple */
+}
+
+.inputComment {
+  width: 80%;
+  height: auto;
+  min-height: 2vh;
+  max-height: 14vh;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  border-radius: 25px;
+}
+
+.BtnComment {
+  width: 15%;
+  border-radius: 25px;
+  border: solid 0.1px gray;
+  cursor: pointer;
+  background-color: blue;
+  color: #ffffff;
+  margin-left: 5px;
+}
+
+@keyframes animModal {
+  from {
+    opacity: 0;
+    transform: scale(0);
     top: 30%;
     left: 50%;
     transform: translate(-50%, -30%);
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    animation: animModal 600ms ease-in-out;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding: 15px;
+    position: fixed;
   }
-  
-  @keyframes animModal {
-    from {
-      opacity: 0;
-      transform: scale(0);
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -30%);
-      position: fixed;
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-  
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -30%);
-      position: fixed;
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    position: fixed;
   }
-  
+}

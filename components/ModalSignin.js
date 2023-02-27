@@ -4,7 +4,6 @@ import { AiOutlineTwitter } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/reducers/user.slice";
-import { useDeferredValue } from "react";
 
 export default function ModalSignin({ setModalSignin }) {
   const router = useRouter();
@@ -72,7 +71,7 @@ const userRed = useSelector((state) => state.user.vlaue)
         placeholder="username"
         className={styles.inputModal}
         value={inputUsername}
-        onChange={(e) => setInputUsername(e.target.value)}
+        onChange={(e) => setInputUsername(e.target.value.slice(0,19))}
       />
       <input
         type="password"

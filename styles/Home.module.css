@@ -3,16 +3,23 @@
   width: 100vw;
   display: flex;
   transition: opacity 0.5s ease-in-out;
+  font-family: 'Tangerine', cursive;
 
 }
 
 .leftContainer {
-  width: 40vw;
+  width: 40%;
   height: 100%;
-  background-size: cover;
+   background-size: contain ;
   background-position: center;
-  background-image: url("../public/images.jpg");
+  background-repeat: no-repeat; 
+  background-image: url('../public/images.jpg');
+  /* object-fit: cover; */
+
 }
+
+
+  
 
 .rightContainer {
   background-color: black;
@@ -58,8 +65,8 @@
   height: 40px;
   font-weight: bold;
   font-size: 18px;
-  border: solid 3px blue;
-  transition-duration: 5ms;
+  border: solid 1px #ffffff;
+  transition: transform 0.5s ease;
 }
 
 .BtnSignin {

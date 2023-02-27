@@ -1,14 +1,14 @@
 import styles from "../styles/Welcome.module.css";
 import { BsFillTrashFill } from "react-icons/bs";
-import { FaHeart, FaHeartBroken, FaComments } from "react-icons/fa";
+import { FaThumbsDown,FaThumbsUp,FaHeart, FaHeartBroken, FaComments } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { useState } from "react";
-import TweetComment from '../components/TweetComment'
+import TweetComment from "../components/TweetComment";
+// import '../styles/fonts.css';
 
 export default function Tweet(props) {
-  const [modal, setModal] = useState (false)
-
+  const [modal, setModal] = useState(false);
 
   const userRed = useSelector((state) => state.user.value);
 
@@ -21,9 +21,9 @@ export default function Tweet(props) {
     isLightMode,
   } = props;
 
-  const handleCommentTweet =() => {
-    setModal(true)
-  }
+  const handleCommentTweet = () => {
+    setModal(true);
+  };
   const date = moment(props.tweet.tweet.createdAt);
   const formattedDate = date.format("DD/MM/YYYY à HH:mm:ss");
 
@@ -39,29 +39,39 @@ export default function Tweet(props) {
       {isTweetVisible() && (
         <div
           className={styles.tweetContainer}
-          style={{ color: isLightMode ? "black" : "white" }}
+          style={{
+            backgroundColor: isLightMode ? "#DCD8F3" : "black",
+            color: isLightMode ? "black" : "white",
+          }}
         >
           <div>
             <div
               className={styles.topPartTweet}
-              style={{ borderColor: isLightMode ? "black" : "gray" }}
+              style={{
+                borderColor: isLightMode ? "black" : "gray",
+                height: "12vh",
+              }}
             >
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   fontSize: "10px",
-                  height: "40px",
+                  height: "100%",
                 }}
               >
                 <img
-                  className={styles.eggPicture2}
-                  src="tweet.jpg"
-                  alt="egg tweeter"
+                  className={styles.userPicture}
+                  src={
+                    props.tweet.photo
+                      ? props.tweet.photo
+                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgPRYXismg465UTJJNto7XrUEggRKG789Arom_elDmxA&s"
+                  }
+                  alt="user picture"
                 />
                 <p
                   style={{
-                    fontSize: "25px",
+                    fontSize: "15px",
                     fontWeight: "bold",
                     marginLeft: "5px",
                   }}
@@ -80,18 +90,19 @@ export default function Tweet(props) {
             </div>
             <div
               style={{
-                marginLeft: "15px",
+                marginLeft: "5px",
                 display: "flex",
-                height: "75px",
+                maxHeight: "14vh",
+                width: "100%",
                 flexWrap: "wrap",
                 wordWrap: "break-word",
-                alignItems: "center",
+                alignContent: "center",
               }}
             >
-              <p style={{ width: "720px" }}>
+              <p style={{ width: "98%" }}>
                 {props.tweet.tweet.tweet.split(" ").map((word, index) => {
                   const color = word.startsWith("#")
-                    ? "blue"
+                    ? "#006AF9"
                     : isLightMode
                     ? "black"
                     : "white";
@@ -104,37 +115,39 @@ export default function Tweet(props) {
               </p>
             </div>
           </div>
-          <div style={{ margin: "15px" }}>
-            <FaHeart
-              onClick={() =>
-                handleLikeTweet(props.tweet.token, props.tweet.tweet._id)
+          <div style={{ margin: "15px", height: "6.2vh" }}>
+            <FaThumbsUp
+              onClick={
+                () =>
+                  handleLikeTweet(props.tweet.token, props.tweet.tweet._id)
               }
-              size={15}
+              size={17}
               style={{
                 color:
                   props.tweet.tweet.like.likeCount > 0
-                    ? "#DBEEB6"
+                    ? "#037821"
                     : props.tweet.tweet.like.likeCount === 0 && !isLightMode
                     ? "white"
                     : props.tweet.tweet.like.likeCount === 0
                     ? "black"
                     : "black",
                 cursor: "pointer",
-                width: "30px",
+                marginLeft: "7px",
               }}
             />
-            <FaHeartBroken
+            <FaThumbsDown
               onClick={() =>
                 handleDislikeTweet(props.tweet.token, props.tweet.tweet._id)
               }
-              size={15}
+              size={17}
               style={{
-                width: "30px",
+                // width: "30px",
+                marginLeft: "12px",
                 color: "white",
                 cursor: "pointer",
                 color:
                   props.tweet.tweet.dislike.dislikeCount > 0
-                    ? "#F08C9E"
+                    ? "#D00511"
                     : props.tweet.tweet.dislike.dislikeCount === 0 &&
                       !isLightMode
                     ? "white"
@@ -153,17 +166,22 @@ export default function Tweet(props) {
                   cursor: "pointer",
                   marginLeft: "20px",
                   marginTop: "5px",
+                  marginRight: "15px",
+                  color: isLightMode ? "black" : "white",
                 }}
               />
             )}
             <FaComments
               style={{
                 color: isLightMode ? "black" : "white",
-                width: "100px",
-                cursor: "pointer"
+                cursor: "pointer",
+                margin: "0",
+                fontSize: "18px",
+                marginLeft: BsFillTrashFill && "18px",
               }}
               onClick={handleCommentTweet}
-            />{modal && <TweetComment setModal={setModal}/>}
+            />
+            {modal && <TweetComment setModal={setModal} />}
             <div style={{ display: "flex" }}>
               <p
                 className={styles.like}

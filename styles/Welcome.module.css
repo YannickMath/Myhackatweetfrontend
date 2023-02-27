@@ -1,5 +1,3 @@
-
-
 .main {
   background-color: black;
   color: #ffffff;
@@ -10,19 +8,18 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
+  font-family: 'Tangerine', cursive;
 }
 
-
 .leftContainer {
-  width: 28%;
+  width: 18%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  padding-left: 15px;
+  
 }
-
 
 .leftContainerBottomPart1 {
   display: flex;
@@ -32,13 +29,13 @@
 }
 
 .logoTweeter {
-  height: 80vh;
+  height: 100%;
   display: flex;
   justify-content: baseline;
 }
 
 .BtnLogout {
-  border: solid 2px #ffffff;
+  border: solid 1px gray;
   color: #ffffff;
   background-color: black;
   border-radius: 20px;
@@ -52,13 +49,6 @@
 .BtnLogout:hover {
   transform: scale(1.2);
   transition-duration: 0.2s;
-}
-.middleContainer {
-  border: solid 2px gray;
-  width: 51vw;
-  height: 100%;
-  border-top: none;
-  border-bottom: none;
 }
 
 .leftContainerBottomPart {
@@ -74,66 +64,46 @@
   margin-bottom: 25px;
 }
 
-.rightContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 30%;
+.middleContainer {
+  border: solid 2px gray;
+  width: 57%;
   height: 100%;
-  margin-left: 20px;
+  border-top: none;
+  border-bottom: none;
 }
 
-.firstName {
-  display: flex;
-  margin: 3px;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.userName {
-  display: flex;
-  margin: 3px;
-  color: gray;
-  font-size: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.eggPicture {
-  border-radius: 20px;
-  width: 50px;
-  height: 50px;
-  margin: 5px;
-}
-.eggPicture2 {
-  border-radius: 20px;
-  width: 30px;
-  height: 30px;
-  margin: 5px;
-}
 .middleTopContainer {
-  height: 20vh;
+  height: 22vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-left: 25px;
+
 }
 
 .middleBottomContainer {
   border-top: solid 2px gray;
   display: flex;
-  max-height: 78vh;
+  height: 80vh;
   overflow-y: scroll;
   overflow-x: hidden;
   flex-direction: column;
   align-items: flex-end;
+}
+
+.middleBottomContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 25%;
+  height: 100%;
+  padding: 15px;
+  padding-right: none;
+  /* margin-left: 20px; */
 }
 
 .tweetCaracters {
@@ -142,17 +112,23 @@
   align-items: center;
   width: 20vw;
   margin-left: 400px;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.tweetInput {
+  /* width: 90%; */
 }
 
 .BtnTweet {
-  background-color: blue;
-  color: #ffffff;
   height: 4vh;
   width: 8vw;
-  border-radius: 25px;
   font-size: 16px;
+  border-radius: 25px;
   border: solid 0.1px gray;
   cursor: pointer;
+  background-color: blue;
+  color: #ffffff;
 }
 .BtnTweet:hover {
   transform: scale(1.2);
@@ -175,9 +151,9 @@
 .topPartTweet {
   justify-content: flex-start;
   align-items: center;
-  width: 50vw;
-  height: 50px;
-  padding: 5px;
+  width: 100%;
+  height: 100%;
+  /* padding: 5px; */
   border: solid 1px gray;
   border-bottom: none;
   border-left: none;
@@ -194,6 +170,12 @@
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 15px;
+  font-size: 15px;
+  /* margin-left: 20px; */
+}
+
+.hashtagContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .hashtagPostContainer {
@@ -201,16 +183,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  height: 30px;
 }
 
-.hashtagSubContainer {
-  display: flex;
+/* .hashtagSubContainer { */
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 50px;
-}
+  align-items: center; */
+  /* height: 50px; */
+  /* } */
 
 .msgTweet {
   border-bottom: solid 2px gray;
@@ -247,12 +229,69 @@
   margin-left: 10px;
 }
 
+.firstName {
+  display: flex;
+  margin: 3px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.userName {
+  display: flex;
+  margin: 3px;
+  color: gray;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.eggPicture {
+  border-radius: 20px;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
+.userPicture {
+  border-radius: 50px;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+}
+
 .tweetDate {
   color: #ffffff;
 }
 
-.tweetContainer{
+.tweetContainer {
   /* margin: -5px; */
-  max-width: 49vw;
+  width: 100%;
+}
 
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  background-color: white;
+  color: #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  font-size: 50px;
+}
+
+.scroll-to-top-button.visible {
+  opacity: 1;
+  visibility: visible;
 }

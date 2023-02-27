@@ -10,6 +10,9 @@ import { useEffect } from "react";
 import React from "react";
 import Tweet from "../components/Tweet";
 import UploadImage from "./UploadImage";
+import ScrollToTopButton from "./ScrollToTopButton";
+
+// import '../styles/fonts.css';
 
 export default function Welcome() {
   // Router hook
@@ -20,7 +23,6 @@ export default function Welcome() {
 
   // Selectors to access the user and tweet values from the store
   const userRed = useSelector((state) => state.user.value);
-  const tweetRed = useSelector((state) => state.tweet.value);
 
   // State for tweet and count
   //Etat pour compter le nombre de hashtag
@@ -39,13 +41,10 @@ export default function Welcome() {
 
   const [isLightMode, setIsLightMode] = useState(false);
 
-  {
-  }
 
   const handleThemeChange = () => {
     setIsLightMode(!isLightMode);
   };
-console.log('HASHTAG', hashtag)
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:3000/tweets");
@@ -54,7 +53,7 @@ console.log('HASHTAG', hashtag)
         setTweets(data.user);
         const regex = /#\S+\b/g;
         const tags = data.user
-        .map((tweet) => tweet.tweet.tweet)
+          .map((tweet) => tweet.tweet.tweet)
           .flat()
           .map((message) => {
             if (typeof message === "string") {
@@ -63,7 +62,6 @@ console.log('HASHTAG', hashtag)
             } else {
               return [];
             }
-            
           })
           .flat();
         setHashtag([...new Set(tags)]);
@@ -73,8 +71,6 @@ console.log('HASHTAG', hashtag)
       console.error(error);
     }
   };
-  
-  console.log("TWEETS",tweets)
 
   useEffect(() => {
     if (userRed.token) {
@@ -86,15 +82,6 @@ console.log('HASHTAG', hashtag)
   const handleClickNameHash = (hash) => {
     setClickHashtag(true);
     setClickNameHash(hash);
-  };
-
-  // Handle input change
-  const handleChange = (e) => {
-    if (e.target.value.length > 0 || e.target.value.length <= 280) {
-      setNewTweet(e.target.value);
-      setCount(e.target.value.length);
-    }
-   
   };
 
   const handleTweet = async () => {
@@ -158,6 +145,8 @@ console.log('HASHTAG', hashtag)
     }
   };
 
+  
+
   const handleLikeTweet = async (token, tweetId) => {
     if (token === userRed.token) {
       alert("You cannot like or dislike your own tweets");
@@ -174,13 +163,15 @@ console.log('HASHTAG', hashtag)
       if (!response.ok) {
         throw new Error("Failed to like tweet");
       }
-
+      await response.json();
       fetchData();
     } catch (error) {
       console.error(error);
     }
   };
 
+ 
+  
   const handleDislikeTweet = async (token, tweetId) => {
     if (token === userRed.token) {
       alert("You cannot like or dislike your own tweets");
@@ -197,18 +188,16 @@ console.log('HASHTAG', hashtag)
       if (!response.ok) {
         throw new Error("Failed to dislike tweet");
       }
-
-      const data = await response.json();
-      if (response.ok) {
-        fetchData();
-      } else {
-        throw new Error("Failed to dislike tweet to the store");
-      }
+      await response.json();
+      fetchData();
     } catch (error) {
       console.error(error);
     }
   };
+  
 
+
+  //fonction pour compter le nombre de hashtag identique
   function countIdenticalStrings(arr, str) {
     let count = 0;
     for (let i = 0; i < arr.length; i++) {
@@ -225,7 +214,11 @@ console.log('HASHTAG', hashtag)
     }
   };
 
-
+  // Handle input change
+  const handleChange = (e) => {
+    setNewTweet(e.target.value.slice(0, 279));
+    setCount(e.target.value.length);
+  };
 
   const tweetView = tweets.map((tweet, i) => {
     return (
@@ -246,56 +239,64 @@ console.log('HASHTAG', hashtag)
     <div
       className={styles.main}
       style={{
+        // fontFamily: "Shantell",
         color: isLightMode ? "black" : "black",
         backgroundColor: isLightMode ? "#ffffff" : "black",
-        border: isLightMode ? "solid 5px gray" : "black",
+        border: isLightMode ? "gray" : "black",
+        overflowY: "hidden",
+        overflowX: "hidden",
       }}
     >
-      <div className={styles.leftContainer}>
+      <div
+        className={styles.leftContainer}
+        style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
+      >
         <div className={styles.logoTweeter}>
           <AiOutlineTwitter
             size={70}
             style={{
               transform: "rotate(180deg)",
               position: "absolute",
-              color: isLightMode ? "black" : "white",
+              color: isLightMode ? "black" : "#2707F1",
               marginTop: "12px",
-              marginLeft: "12px"
-
+              marginLeft: "5px",
             }}
           />
         </div>
-        <div className={styles.leftContainerBottomPart} style={{
-             display: "flex",
+        <div
+          className={styles.leftContainerBottomPart}
+          style={{
+            display: "flex",
             //  flexDirection: "column",
-             justifyContent: "center",
-             alignItems: "flex-end",
-             height: "500px",
-             marginBottom: "40px"
-          
-            }}>
-          <div  >
-            <UploadImage
-            
-           />
-            {/* <img
-              src="tweet.jpg"
-              alt="egg tweeter"
-              className={styles.eggPicture}
-            /> */}
+            justifyContent: "center",
+            alignItems: "flex-end",
+            height: "500px",
+            marginBottom: "40px",
+            marginLeft: "10px",
+          }}
+        >
+          <div>
+            <UploadImage />
           </div>
           <div className={styles.leftContainerBottomPart1}>
             <div className={styles.leftLastBox}>
               <div
                 className={styles.firstName}
-                style={{ color: isLightMode && "black", marginLeft: "15px",fontSize: "23px" }}
+                style={{
+                  color: isLightMode && "black",
+                  marginLeft: "5px",
+                  fontSize: "18px",
+                }}
               >
                 {userRed.firstname}
-                {console.log("userredfirstname", userRed.firstname)}
               </div>
               <div
                 className={styles.userName}
-                style={{ color: isLightMode ? "black" : "white", marginLeft: "15px",fontSize: "20px" }}
+                style={{
+                  color: isLightMode ? "black" : "white",
+                  marginLeft: "5px",
+                  fontSize: "17px",
+                }}
               >
                 @{userRed.username}
               </div>
@@ -303,7 +304,13 @@ console.log('HASHTAG', hashtag)
           </div>
         </div>
         <div>
-          <button className={styles.BtnLogout} onClick={handleLogout}>
+          <button
+            className={styles.BtnLogout}
+            style={{
+              backgroundColor: isLightMode ? "black" : "#2707F1",
+            }}
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </div>
@@ -312,26 +319,39 @@ console.log('HASHTAG', hashtag)
         className={styles.middleContainer}
         style={{ borderColor: isLightMode ? "black" : "gray" }}
       >
-        <div className={styles.middleTopContainer}>
-          <div>
-            <h3 style={{ color: isLightMode ? "black" : "white" }}>
-              {!clickHashtag ? "Home" : `${clickNameHash}`}
+        <div
+          className={styles.middleTopContaine}
+          style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <h3
+              style={{
+                width: "200px",
+                color: isLightMode ? "black" : "white",
+                marginLeft: "5px",
+              }}
+            >
+              {!clickHashtag ? "Home" : `${clickNameHash.slice(0, 25)}...`}
             </h3>
             {clickHashtag && (
-              <div>
-                <AiFillBackward
-                  onClick={handleCloseHashtag}
-                  style={{
-                    paddingLeft: "5px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: "18px",
-                    width: "20px",
-                    cursor: "pointer",
-                    color: isLightMode ? "black" : "white",
-                  }}
-                />
-              </div>
+              // <div>
+              <p
+                onClick={handleCloseHashtag}
+                style={{
+                  paddingLeft: "5px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "15px",
+                  textDecoration: "underline",
+                  width: "20%",
+                  cursor: "pointer",
+                  color: isLightMode ? "black" : "blue",
+                  marginLeft: clickHashtag ? "160px" : "",
+                }}
+              >
+                Back
+              </p>
+              // </div>
             )}
           </div>
           <div className={styles.tweetInput}>
@@ -340,12 +360,13 @@ console.log('HASHTAG', hashtag)
               value={newTweet}
               onChange={handleChange}
               type="text"
-              placeholder={!clickHashtag ? "What's up ?" : ""}
+              placeholder="What's up ?"
               className={styles.msgTweet}
               style={{
-                color: isLightMode ? "white" : "black",
+                color: "black",
                 backgroundColor: isLightMode ? "white" : "white",
                 borderRadius: "20px",
+                width: "90%",
               }}
             />
           </div>
@@ -354,21 +375,32 @@ console.log('HASHTAG', hashtag)
               className={styles.spanCount}
               style={{ color: isLightMode ? "black" : "white" }}
             >
-              {!clickHashtag ? count : ""}
-              {!clickHashtag ? "/280" : ""}
+              {count}/280
             </span>
-            {!clickHashtag ? (
-              <button className={styles.BtnTweet} onClick={() => handleTweet()}>
-                Tweet
-              </button>
-            ) : (
-              ""
-            )}
+
+            <button
+              className={styles.BtnTweet}
+              onClick={() => handleTweet()}
+              style={{
+                backgroundColor: isLightMode ? "black" : "#2707F1",
+              }}
+            >
+              Tweet
+            </button>
           </div>
+        <ScrollToTopButton />
         </div>
-        <div className={styles.middleBottomContainer}>{tweetView}</div>
+        <div
+          className={styles.middleBottomContainer}
+          style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
+        >
+          {tweetView}
+        </div>
       </div>
-      <div className={styles.rightContainer}>
+      <div
+        className={styles.rightContainer}
+        style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
+      >
         <div
           style={{
             display: "flex",
@@ -388,10 +420,9 @@ console.log('HASHTAG', hashtag)
           />
         </div>
 
-        <div className={styles.hashtagContainer}>
+        <div className={styles.hashtagContainer} style={{backgroundColor : isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7"}}>
           {hashtag.map((e, i) => {
             let hash = e?.substring(0);
-            const count = countIdenticalStrings(hashtagCopy, e);
 
             return (
               <div key={i} className={styles.hashPostContainer}>
@@ -405,14 +436,19 @@ console.log('HASHTAG', hashtag)
                 >
                   <h3
                     onClick={() => handleClickNameHash(hash)}
-                    style={{ color: "#ffffff", fontSize: "25px" }}
+                    style={{ color: isLightMode ? "#ffffff" : "black", fontSize: "20px", height: "0.5vh" }}
                   >
-                    {e}
+                    {hash.length > 22 ? `${hash.slice(0, 22)}...` : hash}
                   </h3>
                 </a>
-                <p style={{ color: "gray" }}>
-                  {count ? `${count} tweets` : `${count} tweet`}
-                </p>
+                <div style={{ display: "flex", color: "gray", height: "5vh" }}>
+                  <p>{countIdenticalStrings(hashtagCopy, hash)}</p>
+                  <p style={{ marginLeft: "5px" }}>
+                    {countIdenticalStrings(hashtagCopy, hash) === 1
+                      ? "Tweet"
+                      : "Tweets"}{" "}
+                  </p>
+                </div>
               </div>
             );
           })}

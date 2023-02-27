@@ -63,25 +63,27 @@ export default function Modal({ setModal }) {
       </div>
       <h2>Create your Hackatweet account</h2>
       <input
+      maxLength="30"
         type="text"
         placeholder="firstname"
         className={styles.inputModal}
         value={inputFirstname}
-        onChange={(e) => setInputFirstname(e.target.value)}
+        onChange={(e) => setInputFirstname(e.target.value.slice(0, 19))}
       />
       <input
+      maxLength="30"
         type="text"
         placeholder="username"
         className={styles.inputModal}
         value={inputUsername}
-        onChange={(e) => setInputUsername(e.target.value)}
+        onChange={(e) => setInputUsername(e.target.value.slice(0, 19))}
       />
       <input
         type="password"
         placeholder="password"
         className={styles.inputModal}
         value={inputPassword}
-        onChange={(e) => setInputPassword(e.target.value)}
+        onChange={(e) => setInputPassword(e.target.value.slice(0, 29))}
       />
       {errorMessage && <p>{errorMessage}</p>}
       <button className={styles.BtnSignup} onClick={handleClickSignup}>
