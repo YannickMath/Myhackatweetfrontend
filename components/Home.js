@@ -5,7 +5,9 @@ import { useState } from "react";
 import ModalSignin from "./ModalSignin";
 
 
-export default function Home() {
+export default function Home({isSmallScreen}) {
+
+  console.log('isSmallScreenonHome', isSmallScreen)
     const [modal, setModal] = useState (false)
     const [modalSignin, setModalSignin] = useState(false)
 

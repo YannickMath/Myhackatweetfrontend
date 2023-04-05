@@ -1,6 +1,12 @@
 import styles from "../styles/Welcome.module.css";
 import { BsFillTrashFill } from "react-icons/bs";
-import { FaThumbsDown,FaThumbsUp,FaHeart, FaHeartBroken, FaComments } from "react-icons/fa";
+import {
+  FaThumbsDown,
+  FaThumbsUp,
+  FaHeart,
+  FaHeartBroken,
+  FaComments,
+} from "react-icons/fa";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { useState } from "react";
@@ -9,9 +15,11 @@ import TweetComment from "../components/TweetComment";
 
 export default function Tweet(props) {
   const [modal, setModal] = useState(false);
-
+  const [tweetId, setTweetId] = useState("");
   const userRed = useSelector((state) => state.user.value);
 
+  // const { tweet, modal, setModal, handleCloseComment } = props;
+// console.log("tweetId", tweetId)
   const {
     handleDeleteTweet,
     handleDislikeTweet,
@@ -19,14 +27,33 @@ export default function Tweet(props) {
     clickHashtag,
     clickNameHash,
     isLightMode,
+    // modal,
+    // setModal,
+    // handleCloseComment
   } = props;
 
-  const handleCommentTweet = () => {
-    setModal(true);
+  // console.log("MODAL", modal)
+  // console.log("TWEETID", tweetId)
+  const handleCommentTweet = (id) => {
+    if (modal) {
+      console.log("Une modal de commentaire est déjà ouverte.");
+    } else {
+      setTweetId(props.tweet.tweet._id);
+      // console.log("PROPS.TWEET.TWEET._ID", props.tweet.tweet._id)
+      setModal(true);
+    }
   };
+
+  const handleCloseComment = () => {
+    setModal(false);
+  };
+
+  // console.log("SETMODAL", typeof Modal);
+
+  // console.log("RRRR", tweetId);
   const date = moment(props.tweet.tweet.createdAt);
   const formattedDate = date.format("DD/MM/YYYY à HH:mm:ss");
-
+  // console.log("props.tweet.tweet.tweet", props.tweet.tweet._id);
   const isTweetVisible = () => {
     if (clickHashtag && !props.tweet.tweet.tweet.includes(clickNameHash)) {
       return false;
@@ -92,7 +119,7 @@ export default function Tweet(props) {
               style={{
                 marginLeft: "5px",
                 display: "flex",
-                maxHeight: "14vh",
+                maxHeight: "18vh",
                 width: "100%",
                 flexWrap: "wrap",
                 wordWrap: "break-word",
@@ -115,11 +142,12 @@ export default function Tweet(props) {
               </p>
             </div>
           </div>
-          <div style={{ margin: "15px", height: "6.2vh" }}>
+          <div
+            style={{ margin: "15px", marginBottom: "20px", height: "6.2vh" }}
+          >
             <FaThumbsUp
-              onClick={
-                () =>
-                  handleLikeTweet(props.tweet.token, props.tweet.tweet._id)
+              onClick={() =>
+                handleLikeTweet(props.tweet.token, props.tweet.tweet._id)
               }
               size={17}
               style={{
@@ -181,14 +209,24 @@ export default function Tweet(props) {
               }}
               onClick={handleCommentTweet}
             />
-            {modal && <TweetComment setModal={setModal} />}
+            {modal && (
+              <TweetComment
+              tweet={props.tweet}
+              formattedDate={formattedDate}
+                modal={modal}
+                setModal={setModal}
+                tweetId={tweetId}
+                isLightMode={props.isLightMode}
+                handleCloseComment={handleCloseComment}
+              />
+            )}
             <div style={{ display: "flex" }}>
               <p
                 className={styles.like}
                 style={{
                   color: isLightMode ? "black" : "white",
                   width: "25px",
-                  fontSize: "14px",
+                  fontSize: "12px",
                 }}
               >
                 {props.tweet.tweet.like.likeCount}
@@ -198,10 +236,21 @@ export default function Tweet(props) {
                 style={{
                   color: isLightMode ? "black" : "white",
                   width: "25px",
-                  fontSize: "14px",
+                  fontSize: "12px",
                 }}
               >
                 {props.tweet.tweet.dislike.dislikeCount}
+              </p>
+              <p
+                // className={styles.dislike}
+                style={{
+                  // color: isLightMode ? "black" : "white",
+                  width: "25px",
+                  fontSize: "12px",
+                  marginLeft: "1%"
+                }}
+              >
+                {props.tweet.tweet.comments.length}
               </p>
               <p
                 className={styles.tweetDate}

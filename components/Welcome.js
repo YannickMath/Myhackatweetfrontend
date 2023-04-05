@@ -1,7 +1,6 @@
 import styles from "../styles/Welcome.module.css";
 import { useRouter } from "next/router";
 import { AiOutlineTwitter } from "react-icons/ai";
-import { AiFillBackward } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { BsLightningFill } from "react-icons/bs";
 import { useState } from "react";
@@ -12,9 +11,11 @@ import Tweet from "../components/Tweet";
 import UploadImage from "./UploadImage";
 import ScrollToTopButton from "./ScrollToTopButton";
 
-// import '../styles/fonts.css';
 
-export default function Welcome() {
+export default function Welcome({ isSmallScreen }) {
+
+console.log("ISSMALLSCREEN", isSmallScreen)
+
   // Router hook
   const router = useRouter();
 
@@ -40,11 +41,16 @@ export default function Welcome() {
   const [clickNameHash, setClickNameHash] = useState("");
 
   const [isLightMode, setIsLightMode] = useState(false);
+  const [modal, setModal] = useState(false);
 
+  const handleCloseComment = () => {
+    setModal(false);
+  };
 
   const handleThemeChange = () => {
     setIsLightMode(!isLightMode);
   };
+  
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:3000/tweets");
@@ -85,6 +91,9 @@ export default function Welcome() {
   };
 
   const handleTweet = async () => {
+    if(newTweet.length < 1) {
+      return
+    }
     try {
       const response = await fetch(
         `http://localhost:3000/tweets/tweet/${userRed.token}`,
@@ -231,15 +240,17 @@ export default function Welcome() {
         handleLikeTweet={handleLikeTweet}
         handleDeleteTweet={handleDeleteTweet}
         isLightMode={isLightMode}
+     
+        modal={modal}
+        setModal={setModal}
+        handleCloseComment={handleCloseComment}
       />
     );
   });
-
   return (
     <div
       className={styles.main}
       style={{
-        // fontFamily: "Shantell",
         color: isLightMode ? "black" : "black",
         backgroundColor: isLightMode ? "#ffffff" : "black",
         border: isLightMode ? "gray" : "black",
@@ -253,13 +264,16 @@ export default function Welcome() {
       >
         <div className={styles.logoTweeter}>
           <AiOutlineTwitter
-            size={70}
+            size={isSmallScreen ? 70 : 20}
+          
             style={{
+              // size: isSmallScreen ? "10" : "0",
               transform: "rotate(180deg)",
               position: "absolute",
               color: isLightMode ? "black" : "#2707F1",
               marginTop: "12px",
               marginLeft: "5px",
+              
             }}
           />
         </div>
@@ -267,7 +281,6 @@ export default function Welcome() {
           className={styles.leftContainerBottomPart}
           style={{
             display: "flex",
-            //  flexDirection: "column",
             justifyContent: "center",
             alignItems: "flex-end",
             height: "500px",
@@ -414,10 +427,15 @@ export default function Welcome() {
             style={{
               cursor: "pointer",
               color: isLightMode ? "black" : "white",
+              marginLeft: "80px"
             }}
             size={20}
             onClick={handleThemeChange}
           />
+          <span style={{color: isLightMode ? "black" : "white"}}>
+          LightMode
+
+          </span>
         </div>
 
         <div className={styles.hashtagContainer} style={{backgroundColor : isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7"}}>

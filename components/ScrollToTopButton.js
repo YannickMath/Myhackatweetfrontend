@@ -7,7 +7,6 @@ function ScrollToTopButton(props) {
   const [isVisible, setIsVisible] = useState(false);
 
   const isLightMode = props.isLightMode;
-
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 

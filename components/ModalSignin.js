@@ -25,7 +25,7 @@ const userRed = useSelector((state) => state.user.vlaue)
       });
       const data = await response.json();
       if (data.result) {
-        console.log('TOKEN', data.user.token)
+        // console.log('TOKEN', data.user.token)
         dispatch(
           login({
             firstname: data.user.firstname,
@@ -34,7 +34,7 @@ const userRed = useSelector((state) => state.user.vlaue)
             token: data.user.token,
           })
           );
-          console.log("datauserfirstname",data.user.firstname)
+          // console.log("datauserfirstname",data.user.firstname)
 
         router.push("/welcome");
       } else {

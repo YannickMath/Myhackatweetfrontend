@@ -31,7 +31,7 @@ export default function UploadImage(props) {
         );
 
         const imageResponse = await response.json();
-        console.log("RESPONSE", imageResponse);
+        // console.log("RESPONSE", imageResponse);
 
         if (imageResponse.result) {
           setProfilePicture(imageResponse.user.photo);
@@ -58,7 +58,7 @@ export default function UploadImage(props) {
       const photoResponse = await response.json();
 
       if (photoResponse.result) {
-        console.log("PHOTORESPONSE", photoResponse);
+        // console.log("PHOTORESPONSE", photoResponse);
         setProfilePicture(photoResponse.profilePicture);
       }
     } catch (error) {
