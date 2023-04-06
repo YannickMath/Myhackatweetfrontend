@@ -27,6 +27,7 @@ export default function Tweet(props) {
     clickHashtag,
     clickNameHash,
     isLightMode,
+    isSmallScreen,
     // modal,
     // setModal,
     // handleCloseComment
@@ -69,6 +70,7 @@ export default function Tweet(props) {
           style={{
             backgroundColor: isLightMode ? "#DCD8F3" : "black",
             color: isLightMode ? "black" : "white",
+            
           }}
         >
           <div>
@@ -82,13 +84,14 @@ export default function Tweet(props) {
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
+                  alignItems: "start",
                   fontSize: "10px",
                   height: "100%",
                 }}
               >
                 <img
                   className={styles.userPicture}
+                  style={{ marginTop: isSmallScreen && "4px"}}
                   src={
                     props.tweet.photo
                       ? props.tweet.photo
@@ -101,6 +104,8 @@ export default function Tweet(props) {
                     fontSize: "15px",
                     fontWeight: "bold",
                     marginLeft: "5px",
+                    marginTop: isSmallScreen && "20px"
+                   
                   }}
                 >
                   {props.tweet.firstname}
@@ -120,10 +125,14 @@ export default function Tweet(props) {
                 marginLeft: "5px",
                 display: "flex",
                 maxHeight: "18vh",
+              padding: isSmallScreen && "2px",
                 width: "100%",
                 flexWrap: "wrap",
                 wordWrap: "break-word",
                 alignContent: "center",
+                lineHeight: isSmallScreen && "1.2",
+                marginTop: isSmallScreen && "-15px",
+                marginBottom: isSmallScreen && "5px"
               }}
             >
               <p style={{ width: "98%" }}>
@@ -134,7 +143,7 @@ export default function Tweet(props) {
                     ? "black"
                     : "white";
                   return (
-                    <span key={index} style={{ color, fontSize: "19px" }}>
+                    <span key={index} style={{ color, fontSize: isSmallScreen ? "14px" : "19px" }}>
                       {word}{" "}
                     </span>
                   );
@@ -143,7 +152,7 @@ export default function Tweet(props) {
             </div>
           </div>
           <div
-            style={{ margin: "15px", marginBottom: "20px", height: "6.2vh" }}
+            style={{ margin: "15px", marginBottom: isSmallScreen ? "10px" : "20px", height: "6.2vh" }}
           >
             <FaThumbsUp
               onClick={() =>
@@ -205,7 +214,7 @@ export default function Tweet(props) {
                 cursor: "pointer",
                 margin: "0",
                 fontSize: "18px",
-                marginLeft: BsFillTrashFill && "18px",
+                marginLeft: BsFillTrashFill && isSmallScreen ? "10px" : "18px",
               }}
               onClick={handleCommentTweet}
             />

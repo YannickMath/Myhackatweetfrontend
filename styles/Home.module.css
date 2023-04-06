@@ -3,23 +3,17 @@
   width: 100vw;
   display: flex;
   transition: opacity 0.5s ease-in-out;
-  font-family: 'Tangerine', cursive;
-
+  font-family: "Tangerine", cursive;
 }
 
 .leftContainer {
   width: 40%;
   height: 100%;
-   background-size: contain ;
+  background-size: contain;
   background-position: center;
-  background-repeat: no-repeat; 
-  background-image: url('../public/images.jpg');
-  /* object-fit: cover; */
-
+  background-repeat: no-repeat;
+  background-image: url("../public/images.jpg");
 }
-
-
-  
 
 .rightContainer {
   background-color: black;
@@ -53,7 +47,7 @@
 .title3 {
   font-size: 30px;
 }
-.title4{
+.title4 {
   width: 20vw;
 }
 
@@ -79,26 +73,94 @@
   font-size: 18px;
   border: solid 3px gray;
   transition: transform 0.5s ease;
-
 }
 
-.BtnSignin:hover{
+.BtnSignin:hover {
   font-size: 20px;
   font-weight: bold;
   transform: scale(1.2);
-  
 }
-.BtnSignup:hover{
+.BtnSignup:hover {
   font-size: 20px;
   font-weight: bold;
- 
+
   transform: scale(1.2);
 }
 
-.Btn{
+.Btn {
   transition: transform 0.5s ease;
 }
 
-.Btn:hover{
+.Btn:hover {
   transform: scale(1.2);
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.5s ease-in-out;
+    font-family: "Tangerine", cursive;
+  }
+
+  .leftContainer {
+    width: 100vw;
+    height: 20vh;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../public/images.jpg");
+  }
+
+  .rightContainer {
+    background-color: black;
+    color: #ffffff;
+    height: 80vh;
+    width: 100vw;
+    text-align: center;
+  }
+
+  .rightTopContainer {
+    /* height: 60%; */
+    margin-left: 0px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
+  }
+  
+  .rightBottomContainer {
+    margin-left: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 30%;
+    width: 100%;
+    /* margin-top: 20px; */
+    align-items: center;
+  }
+
+  .title1 {
+    font-size: 40px;
+    /* margin-left: -10%; */
+  }
+
+  .title3 {
+    font-size: 25px;
+    /* margin-left: -10%; */
+  }
+  .title4 {
+    width: 80vw;
+    text-align: center;
+  }
+
+  .BtnSignup {
+    width:73vw;
+  }
+
+  .BtnSignin {
+
+    width: 73vw;
+  }
 }

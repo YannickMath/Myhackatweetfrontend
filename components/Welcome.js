@@ -12,9 +12,29 @@ import UploadImage from "./UploadImage";
 import ScrollToTopButton from "./ScrollToTopButton";
 
 
-export default function Welcome({ isSmallScreen }) {
+export default function Welcome() {
 
-console.log("ISSMALLSCREEN", isSmallScreen)
+  
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  // console.log("isSmallScreen value in parent:", isSmallScreen);
+  console.log("ISSMALLSCREEN", isSmallScreen)
+
+
+
+const updateScreenSize = () => {
+  const mediaQuery = window.matchMedia("(max-width: 768px) and (orientation: portrait)");
+  setIsSmallScreen(mediaQuery.matches);
+};
+
+useEffect(() => {
+  updateScreenSize(); // Call the function once to set the initial value
+  window.addEventListener("resize", updateScreenSize); // Listen for window resize events
+
+  // Cleanup the event listener when the component is unmounted
+  return () => {
+    window.removeEventListener("resize", updateScreenSize);
+  };
+}, []);
 
   // Router hook
   const router = useRouter();
@@ -240,7 +260,7 @@ console.log("ISSMALLSCREEN", isSmallScreen)
         handleLikeTweet={handleLikeTweet}
         handleDeleteTweet={handleDeleteTweet}
         isLightMode={isLightMode}
-     
+        isSmallScreen={isSmallScreen}
         modal={modal}
         setModal={setModal}
         handleCloseComment={handleCloseComment}
@@ -264,7 +284,7 @@ console.log("ISSMALLSCREEN", isSmallScreen)
       >
         <div className={styles.logoTweeter}>
           <AiOutlineTwitter
-            size={isSmallScreen ? 70 : 20}
+            size={70}
           
             style={{
               // size: isSmallScreen ? "10" : "0",
@@ -281,24 +301,25 @@ console.log("ISSMALLSCREEN", isSmallScreen)
           className={styles.leftContainerBottomPart}
           style={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "start" ,
             alignItems: "flex-end",
             height: "500px",
             marginBottom: "40px",
             marginLeft: "10px",
           }}
         >
-          <div>
-            <UploadImage />
+          <div >
+            <UploadImage isSmallScreen={isSmallScreen}/>
           </div>
           <div className={styles.leftContainerBottomPart1}>
-            <div className={styles.leftLastBox}>
+            <div className={styles.leftLastBox} >
               <div
                 className={styles.firstName}
                 style={{
                   color: isLightMode && "black",
                   marginLeft: "5px",
                   fontSize: "18px",
+                  
                 }}
               >
                 {userRed.firstname}
@@ -309,6 +330,7 @@ console.log("ISSMALLSCREEN", isSmallScreen)
                   color: isLightMode ? "black" : "white",
                   marginLeft: "5px",
                   fontSize: "17px",
+
                 }}
               >
                 @{userRed.username}
@@ -333,7 +355,7 @@ console.log("ISSMALLSCREEN", isSmallScreen)
         style={{ borderColor: isLightMode ? "black" : "gray" }}
       >
         <div
-          className={styles.middleTopContaine}
+          className={styles.middleTopContainer}
           style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -342,9 +364,11 @@ console.log("ISSMALLSCREEN", isSmallScreen)
                 width: "200px",
                 color: isLightMode ? "black" : "white",
                 marginLeft: "5px",
+                display: isSmallScreen && "none"
               }}
             >
-              {!clickHashtag ? "Home" : `${clickNameHash.slice(0, 25)}...`}
+             {!clickHashtag ?  "Home" : `${clickNameHash.slice(0, 25)}...`}
+
             </h3>
             {clickHashtag && (
               // <div>
@@ -367,7 +391,7 @@ console.log("ISSMALLSCREEN", isSmallScreen)
               // </div>
             )}
           </div>
-          <div className={styles.tweetInput}>
+          <div>
             <input
               onKeyDown={handleKeyDown}
               value={newTweet}
@@ -476,3 +500,4 @@ console.log("ISSMALLSCREEN", isSmallScreen)
     // </div>
   );
 }
+
