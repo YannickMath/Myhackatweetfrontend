@@ -272,7 +272,7 @@ useEffect(() => {
       className={styles.main}
       style={{
         color: isLightMode ? "black" : "black",
-        backgroundColor: isLightMode ? "#ffffff" : "black",
+        backgroundColor: isLightMode ? "#DCD8F3" : "black",
         border: isLightMode ? "gray" : "black",
         overflowY: "hidden",
         overflowX: "hidden",
