@@ -10,32 +10,29 @@ import React from "react";
 import Tweet from "../components/Tweet";
 import UploadImage from "./UploadImage";
 import ScrollToTopButton from "./ScrollToTopButton";
-
-
+import ReactModal from "react-modal";
 
 export default function Welcome() {
-
-  
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   // console.log("isSmallScreen value in parent:", isSmallScreen);
-  console.log("ISSMALLSCREEN", isSmallScreen)
+  console.log("ISSMALLSCREEN", isSmallScreen);
 
-
-
-const updateScreenSize = () => {
-  const mediaQuery = window.matchMedia("(max-width: 768px) and (orientation: portrait)");
-  setIsSmallScreen(mediaQuery.matches);
-};
-
-useEffect(() => {
-  updateScreenSize(); // Call the function once to set the initial value
-  window.addEventListener("resize", updateScreenSize); // Listen for window resize events
-
-  // Cleanup the event listener when the component is unmounted
-  return () => {
-    window.removeEventListener("resize", updateScreenSize);
+  const updateScreenSize = () => {
+    const mediaQuery = window.matchMedia(
+      "(max-width: 768px) and (orientation: portrait)"
+    );
+    setIsSmallScreen(mediaQuery.matches);
   };
-}, []);
+
+  useEffect(() => {
+    updateScreenSize(); // Call the function once to set the initial value
+    window.addEventListener("resize", updateScreenSize); // Listen for window resize events
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", updateScreenSize);
+    };
+  }, []);
 
   // Router hook
   const router = useRouter();
@@ -71,10 +68,12 @@ useEffect(() => {
   const handleThemeChange = () => {
     setIsLightMode(!isLightMode);
   };
-  
+
   const fetchData = async () => {
     try {
-      const response = await fetch("https://myhackatweetbackend.vercel.app/tweets");
+      const response = await fetch(
+        "https://myhackatweetbackend.vercel.app/tweets"
+      );
       const data = await response.json();
       if (data.result) {
         setTweets(data.user);
@@ -112,8 +111,8 @@ useEffect(() => {
   };
 
   const handleTweet = async () => {
-    if(newTweet.length < 1) {
-      return
+    if (newTweet.length < 1) {
+      return;
     }
     try {
       const response = await fetch(
@@ -175,8 +174,6 @@ useEffect(() => {
     }
   };
 
-  
-
   const handleLikeTweet = async (token, tweetId) => {
     if (token === userRed.token) {
       alert("You cannot like or dislike your own tweets");
@@ -200,8 +197,6 @@ useEffect(() => {
     }
   };
 
- 
-  
   const handleDislikeTweet = async (token, tweetId) => {
     if (token === userRed.token) {
       alert("You cannot like or dislike your own tweets");
@@ -224,8 +219,6 @@ useEffect(() => {
       console.error(error);
     }
   };
-  
-
 
   //fonction pour compter le nombre de hashtag identique
   function countIdenticalStrings(arr, str) {
@@ -268,6 +261,11 @@ useEffect(() => {
       />
     );
   });
+
+
+  const [modalTrendIsOpen, setModalTrendIsOpen] = useState(false);
+
+
   return (
     <div
       className={styles.main}
@@ -286,7 +284,6 @@ useEffect(() => {
         <div className={styles.logoTweeter}>
           <AiOutlineTwitter
             size={70}
-          
             style={{
               // size: isSmallScreen ? "10" : "0",
               transform: "rotate(180deg)",
@@ -294,7 +291,6 @@ useEffect(() => {
               color: isLightMode ? "black" : "#2707F1",
               marginTop: "12px",
               marginLeft: "5px",
-              
             }}
           />
         </div>
@@ -302,25 +298,24 @@ useEffect(() => {
           className={styles.leftContainerBottomPart}
           style={{
             display: "flex",
-            justifyContent: "start" ,
+            justifyContent: "start",
             alignItems: "flex-end",
             height: "500px",
             marginBottom: "40px",
             marginLeft: "10px",
           }}
         >
-          <div >
-            <UploadImage isSmallScreen={isSmallScreen}/>
+          <div>
+            <UploadImage isSmallScreen={isSmallScreen} />
           </div>
           <div className={styles.leftContainerBottomPart1}>
-            <div className={styles.leftLastBox} >
+            <div className={styles.leftLastBox}>
               <div
                 className={styles.firstName}
                 style={{
                   color: isLightMode && "black",
                   marginLeft: "5px",
                   // fontSize: isSmallScreen ? "13px" :"18px",
-                  
                 }}
               >
                 {userRed.firstname}
@@ -331,7 +326,6 @@ useEffect(() => {
                   color: isLightMode ? "black" : "white",
                   marginLeft: "5px",
                   // fontSize: isSmallScreen ? "12px" : "17px",
-
                 }}
               >
                 @{userRed.username}
@@ -339,12 +333,14 @@ useEffect(() => {
             </div>
           </div>
         </div>
-        <div style={{
-          width: isSmallScreen && "50vw",
-          height: isSmallScreen && "10vh",
-          marginTop: isSmallScreen && "-100px",
-          marginLeft: isSmallScreen && "300px",
-          }}>
+        <div
+          style={{
+            width: isSmallScreen && "50vw",
+            height: isSmallScreen && "10vh",
+            marginTop: isSmallScreen && "-100px",
+            marginLeft: isSmallScreen && "300px",
+          }}
+        >
           <button
             className={styles.BtnLogout}
             style={{
@@ -370,11 +366,10 @@ useEffect(() => {
                 width: "200px",
                 color: isLightMode ? "black" : "white",
                 marginLeft: "5px",
-                display: isSmallScreen && "none"
+                display: isSmallScreen && "none",
               }}
             >
-             {!clickHashtag ?  "Home" : `${clickNameHash.slice(0, 25)}...`}
-
+              {!clickHashtag ? "Home" : `${clickNameHash.slice(0, 25)}...`}
             </h3>
             {clickHashtag && (
               // <div>
@@ -431,7 +426,7 @@ useEffect(() => {
               Tweet
             </button>
           </div>
-        <ScrollToTopButton />
+          <ScrollToTopButton />
         </div>
         <div
           className={styles.middleBottomContainer}
@@ -450,62 +445,124 @@ useEffect(() => {
             justifyContent: "space-between",
             width: "80%",
             alignItems: "center",
-            height: isSmallScreen && "3vh"
-
+            height: isSmallScreen && "3vh",
           }}
         >
-          <h3 style={{ color: isLightMode ? "black" : "white" }}>Trends</h3>
+          <h3 style={{ color: isLightMode ? "black" : "white" }} onClick={() => setModalTrendIsOpen(true)}>Trends</h3>
           <BsLightningFill
             style={{
               cursor: "pointer",
               color: isLightMode ? "black" : "white",
-              marginLeft: "80px"
+              marginLeft: "80px",
             }}
             size={20}
             onClick={handleThemeChange}
           />
-          <span style={{color: isLightMode ? "black" : "white"}}>
-          LightMode
-
+          <span style={{ color: isLightMode ? "black" : "white" }}>
+            LightMode
           </span>
         </div>
+      
 
-        <div className={styles.hashtagContainer} style={{backgroundColor : isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7"}}>
-          {hashtag.map((e, i) => {
-            let hash = e?.substring(0);
+        {!isSmallScreen && (
+          <div
+            className={styles.hashtagContainer}
+            style={{
+              backgroundColor: isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7",
+            }}
+          >
+            {hashtag.map((e, i) => {
+              let hash = e?.substring(0);
 
-            return (
-              <div key={i} className={styles.hashPostContainer}>
-                <a
-                  // href={hash}
-                  style={{
-                    textDecoration: "none",
-                    color: "#000",
-                    cursor: "pointer",
-                  }}
-                >
-                  <h3
-                    onClick={() => handleClickNameHash(hash)}
-                    style={{ color: isLightMode ? "#ffffff" : "black", fontSize: "20px", height: "0.5vh" }}
+              return (
+                <div key={i} className={styles.hashPostContainer}>
+                  <a
+                    // href={hash}
+                    style={{
+                      textDecoration: "none",
+                      color: "#000",
+                      cursor: "pointer",
+                    }}
                   >
-                    {hash.length > 22 ? `${hash.slice(0, 22)}...` : hash}
-                  </h3>
-                </a>
-                <div style={{ display: "flex", color: "gray", height: "5vh" }}>
-                  <p>{countIdenticalStrings(hashtagCopy, hash)}</p>
-                  <p style={{ marginLeft: "5px" }}>
-                    {countIdenticalStrings(hashtagCopy, hash) === 1
-                      ? "Tweet"
-                      : "Tweets"}{" "}
-                  </p>
+                    <h3
+                      onClick={() => handleClickNameHash(hash)}
+                      style={{
+                        color: isLightMode ? "#ffffff" : "black",
+                        fontSize: "20px",
+                        height: "0.5vh",
+                      }}
+                    >
+                      {hash.length > 22 ? `${hash.slice(0, 22)}...` : hash}
+                    </h3>
+                  </a>
+                  <div
+                    style={{ display: "flex", color: "gray", height: "5vh" }}
+                  >
+                    <p>{countIdenticalStrings(hashtagCopy, hash)}</p>
+                    <p style={{ marginLeft: "5px" }}>
+                      {countIdenticalStrings(hashtagCopy, hash) === 1
+                        ? "Tweet"
+                        : "Tweets"}{" "}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
+      <ReactModal
+  isOpen={modalTrendIsOpen}
+  onRequestClose={() => setModalTrendIsOpen(false)}
+  // style={{opacity: "0"}}
+>
+<div
+            className={styles.hashtagContainer}
+            style={{
+              backgroundColor: isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7",
+            }}
+          >
+            {hashtag.map((e, i) => {
+              let hash = e?.substring(0);
+
+              return (
+                <div key={i} className={styles.hashPostContainer}>
+                  <a
+                    // href={hash}
+                    style={{
+                      textDecoration: "none",
+                      color: "#000",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <h3
+                      onClick={() => handleClickNameHash(hash)}
+                      style={{
+                        color: isLightMode ? "#ffffff" : "black",
+                        fontSize: "20px",
+                        height: "0.5vh",
+                      }}
+                    >
+                      {hash.length > 22 ? `${hash.slice(0, 22)}...` : hash}
+                    </h3>
+                  </a>
+                  <div
+                    style={{ display: "flex", color: "gray", height: "5vh" }}
+                  >
+                    <p>{countIdenticalStrings(hashtagCopy, hash)}</p>
+                    <p style={{ marginLeft: "5px" }}>
+                      {countIdenticalStrings(hashtagCopy, hash) === 1
+                        ? "Tweet"
+                        : "Tweets"}{" "}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+    
+</ReactModal>
     </div>
     // </div>
   );
 }
-

@@ -290,13 +290,13 @@
 
   .middleContainer {
     width: 100vw;
-    height: 80vh;
+    height: 75vh;
     margin-top:42px;
  
   }
   .rightContainer {
     width: 100vw;
-    height: 10vh;
+    height: 15vh;
     border: solid 3px gray;
     border-left: none;
     border-right: none;
@@ -345,6 +345,17 @@
     margin-bottom: -15px;
   }
  
- 
+  .hashtagContainer {
+    /* border-radius: 45px; */
+    width: 70vw;
+    /* height: 80vh; */
+    /* background-color: rgb(31, 30, 30); */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* overflow-y: scroll; */
+    /* overflow-x: hidden; */
+    /* padding: 15px; */
+    /* font-size: 15px; */
+  }
   
 }
