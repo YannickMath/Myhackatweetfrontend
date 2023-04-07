@@ -16,8 +16,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
-  /* align-items: flex-start; */
 }
 
 .logoTweeter {
@@ -239,7 +237,6 @@
 }
 
 .tweetContainer {
-  /* margin: -5px; */
   width: 100%;
 }
 
@@ -266,7 +263,7 @@
   visibility: visible;
 }
 
-/*MEDIAQUERIES*/
+/*MEDIAQUERIES SMARTPHONE*/
 @media only screen and (max-width: 768px) {
   .main {
     background-color: black;
@@ -287,84 +284,48 @@
     width: 100vw;
     height: 10vh;
     justify-content: flex-start;
-    align-items: start;
-    /* margin-top: 10px; */
+    align-items: flex-start;
     display: flex;
-    /* align-items: start; */
-    /* border-top: solid 2px gray; */
-    /* justify-content: center; */
-    /* flex-direction: column; */
-    /* justify-content: space-between;
-    align-items: flex-start; */
   }
 
   .middleContainer {
-    /* border: solid 2px gray; */
     width: 100vw;
     height: 80vh;
     margin-top:42px;
-    /* border-top: none;
-    border-bottom: none; */
+ 
   }
   .rightContainer {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center; */
     width: 100vw;
     height: 10vh;
-    /* padding: 15px;
-    padding-right: none; */
     border: solid 3px gray;
     border-left: none;
     border-right: none;
     border-bottom:  none;
   }
   .leftLastBox {
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    /* margin-left: 5px; */
     margin-bottom: 5px;
   }
   .leftContainerBottomPart {
     margin-top: 10px;
     width: 80vw;
-    /* position: left; */
-    /* margin-left: -40%; */
-    /* display: flex;
-    flex-direction: row; */
   }
   .logoTweeter {
     display: none;
-    /* width: 1vh; */
   }
   .middleContainer {
     border: none;
   }
   .msgTweet {
-    /* border-bottom: solid 2px gray; */
-    /* padding: 5px; */
-    /* font-size: 16px; */
-    /* outline: none; */
-    /* background-color: black; */
-    /* width: 600px; */
     margin-left: 18px;
-    /* color: black; */
-    /* width: 100%; */
   }
   .middleTopContainer {
     height: 8vh;
   }
 
   .tweetCaracters {
-    /* display: flex; */
     justify-content: flex-end;
-    /* align-items: center; */
     width: 85vw;
     margin-left: 0px;
-    /* margin-top: 10px; */
-    /* padding-bottom: 10px; */
   }
 
   .BtnTweet {
@@ -372,29 +333,17 @@
     margin-left: 5px;
   }
   .BtnLogout {
-    /* border: solid 1px gray; */
-    /* color: #ffffff; */
-    /* background-color: black; */
     border-radius: 50px;
-    /* margin: 0px 0px 0px 0px; */
     width: 10vw;
     height: 5vh;
     font-size: 10px;
-    /* cursor: pointer; */
     z-index: 100;
   }
   .tweetCaracters {
-    /* display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 20vw;
-    margin-left: 400px;*/
     margin-top: 3px; 
     padding-bottom: 0px;
     margin-bottom: -15px;
   }
-  /* .containerLogout { */
-   /* width: 30vw; */
-  /* } */
+ 
   
 }

@@ -227,6 +227,7 @@ export default function Tweet(props) {
                 tweetId={tweetId}
                 isLightMode={props.isLightMode}
                 handleCloseComment={handleCloseComment}
+                isSmallScreen={isSmallScreen}
               />
             )}
             <div style={{ display: "flex" }}>

@@ -82,7 +82,21 @@
 .answerZone {
   overflow-y:  scroll;
 }
-
+/* .tweetCommentMsg {
+  display: "flex";
+  max-height: "18vh";
+  max-width: "35vw";
+  flex-direction: "column";
+  word-wrap: "break-word";
+  align-content: "center";
+} */
+/* .textareaComment {
+  resize: none;
+  width: 32vw;
+  border-radius: 10px;
+  height: 8vh;
+  max-width: 50vw;
+} */
 /* @keyframes animModal {
   from {
     opacity: 0;
@@ -102,3 +116,106 @@
     position: fixed;
   }
 } */
+
+@media only screen and (max-width: 768px) {
+  .main {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: space-around; */
+    width: 90vw;
+    height: 60vh;
+    /* background-color: rgb(24, 24, 24); */
+    /* color: #ffffff; */
+    /* border: solid 2px #ffffff; */
+    /* position: fixed; */
+    top: 40%;
+    /* left: 50%; */
+    /* transform: translate(-50%, -30%); */
+    /* align-items: center; */
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    /* animation: animModal 600ms ease-in-out; */
+    /* align-items: flex-start; */
+    /* justify-content: flex-start; */
+    /* padding: 5px; */
+    /* overflow-y: scroll; */
+    /* border-radius: 10px; */
+  }
+  
+.main::-webkit-scrollbar {
+  /* display: none; */
+}
+.header {
+  /* position: sticky;
+  top: 0; */
+
+}
+.barComment{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  width: 80vw;
+  
+}
+
+.textareaComment {
+  /* resize: none;
+  width: 90vw;
+  border-radius: 10px;
+  /* width: 80vw; */
+  /* height: 20vh;  */
+}
+.mapComment {
+  /* overflow-y: scroll; */
+  /* width: 100%;  */
+}
+.BtnAnswer {
+  /* height: 3vh;
+  width: 4vw;
+  font-size: 10px;
+  border-radius: 25px;
+  border: solid 0.1px gray;
+  cursor: pointer;
+  background-color: blue;
+  color: #ffffff;
+  margin: 0 5px 0 5px */
+}
+.BtnComment {
+  /* height: 4vh;
+  width: 6vw;
+  font-size: 14px;
+  border-radius: 25px;
+  border: solid 0.1px gray;
+  cursor: pointer;
+  background-color: blue;
+  color: #ffffff;
+  margin: 0 5px 0 5px */
+}
+
+
+.answerBox {
+ /* position: fixed; 
+  top: 25%;
+  left: 30%; 
+  width: 80%;
+  height: 70%;
+  display: flex;
+  flex-direction: column; */
+  /* justify-content: space-between; */
+  /* align-items:flex-start; */
+  /* background-color: rgba(102, 97, 97, 0.5); */
+  /* z-index: 999; */
+}
+
+.answerZone {
+  /* overflow-y:  scroll; */
+}
+/* .tweetCommentMsg {
+  display: "flex";
+  max-height: "18vh";
+  max-width: "35vw";
+  flex-direction: "column";
+  word-wrap: "break-word";
+  align-content: "center";
+} */
+}

@@ -12,11 +12,31 @@ export default function TweetComment(props) {
   const userRed = useSelector((state) => state.user.value);
   const [count, setCount] = useState(0);
   // const [count2, setCount2] = useState(0);
-  const { tweetId, isLightMode, modal, setModal, handleCloseComment } = props;
+  const { tweetId, isLightMode, modal, setModal,  handleCloseComment } = props;
   const [answerModal, setAnswerModal] = useState(false);
   const [commentId, setCommentId] = useState("");
   // const [newAnswer, setNewAnswer] = useState("");
   // const [inputVisible, setInputVisible] = useState(false);
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  console.log("isSmallScreen value in parent:", isSmallScreen);
+
+  const updateScreenSize = () => {
+    const mediaQuery = window.matchMedia(
+      "(max-width: 768px) and (orientation: portrait)"
+    );
+    setIsSmallScreen(mediaQuery.matches);
+  };
+
+  useEffect(() => {
+    updateScreenSize(); // Call the function once to set the initial value
+    window.addEventListener("resize", updateScreenSize); // Listen for window resize events
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", updateScreenSize);
+    };
+  }, []);
 
   useEffect(() => {
     if (tweetId) {
@@ -98,6 +118,7 @@ export default function TweetComment(props) {
 const handleAnswerModal = () => {
   setAnswerModal(true)
 }
+// console.log("issmallscreentweetComment", isSmallScreen)
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -117,9 +138,10 @@ const handleAnswerModal = () => {
             placeholder="Message..."
             onChange={handleChange}
             value={newComment}
+            // className={styles.texteareaComment}
             style={{
               resize: "none",
-              width: "32vw",
+              width: isSmallScreen ? "50vw" : "32vw",
               borderRadius: "10px",
               height: "8vh",
               maxWidth: "50vw",
@@ -145,18 +167,20 @@ const handleAnswerModal = () => {
             const formattedDate = date.format("DD/MM/YYYY à HH:mm:ss");
             return (
               <div key={i} className={styles.comment}>
-                <div style={{ display: "flex" }}>
-                  <p style={{ marginRight: "15px", color: "gold" }}>
+                <div style={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen && "90vw", alignItems: isSmallScreen && "flex-start" }}>
+                  <p style={{ marginRight: "15px", color: "gold",  maxHeight: isSmallScreen && "0vh" }}>
                     @{comment.username}
                   </p>
-                  <p
+                  <p className={styles.tweetCommentMsg}
                     style={{
                       display: "flex",
-                      maxHeight: "18vh",
-                      maxWidth: "35vw",
+                      maxHeight: isSmallScreen ? "18vh" : "30vh",
+                      maxWidth: isSmallScreen ? "85vw" : "35vw",
+                      padding: isSmallScreen && "5px",
                       flexDirection: "column",
                       wordWrap: "break-word",
                       alignContent: "center",
+                      fontSize: isSmallScreen && "12px"
                     }}
                   >
                     {comment.comment}
