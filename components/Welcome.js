@@ -522,6 +522,7 @@ export default function Welcome() {
               backgroundColor: isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7",
             }}
           >
+            <p onClick={() => setModalTrendIsOpen(false)}>X</p>
             {hashtag.map((e, i) => {
               let hash = e?.substring(0);
 
@@ -536,7 +537,10 @@ export default function Welcome() {
                     }}
                   >
                     <h3
-                      onClick={() => handleClickNameHash(hash)}
+                      onClick={() => {
+                        handleClickNameHash(hash);
+                        setModalTrendIsOpen(false);
+                     }}
                       style={{
                         color: isLightMode ? "#ffffff" : "black",
                         fontSize: "20px",
