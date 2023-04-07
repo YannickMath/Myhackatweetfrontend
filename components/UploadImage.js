@@ -81,6 +81,7 @@ return (
       backgroundColor: "gray",
       width: props.isSmallScreen ? "70px" : "90px",
       height: props.isSmallScreen ? "70px" : "90px",
+      marginTop: props.isSmallScreen && "10px",
       borderRadius: "50%",
       border: "1px solid",
       borderColor: isLightMode ? "black" : "white",

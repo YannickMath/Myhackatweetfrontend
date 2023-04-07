@@ -338,7 +338,12 @@ useEffect(() => {
             </div>
           </div>
         </div>
-        <div>
+        <div style={{
+          width: isSmallScreen && "50vw",
+          height: isSmallScreen && "10vh",
+          marginTop: isSmallScreen && "-100px",
+          marginLeft: isSmallScreen && "300px",
+          }}>
           <button
             className={styles.BtnLogout}
             style={{
@@ -346,7 +351,7 @@ useEffect(() => {
             }}
             onClick={handleLogout}
           >
-            Logout
+            {isSmallScreen ? "I" : "Logout"}
           </button>
         </div>
       </div>
