@@ -276,7 +276,7 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    font-family: "Tangerine", cursive;
+    /* font-family: "Tangerine", cursive; */
   }
 
   .leftContainer {
