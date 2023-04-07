@@ -46,7 +46,7 @@ export default function Modal({ setModal }) {
       setErrorMessage(error.message);
     }
   };
-console.log("hello")
+
   return (
     <div className={styles.main}>
       <div className={styles.logoModal}>
