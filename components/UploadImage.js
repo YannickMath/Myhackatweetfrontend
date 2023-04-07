@@ -23,7 +23,7 @@ export default function UploadImage(props) {
         formData.append("file", file);
 
         const response = await fetch(
-          `http://localhost:3000/users/photo/${token}`,
+          `https://myhackatweetbackend.vercel.app/users/photo/${token}`,
           {
             method: "POST",
             body: formData,
@@ -53,7 +53,7 @@ export default function UploadImage(props) {
   const fetchPhoto = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/users/photoUser/${token}`
+        `https://myhackatweetbackend.vercel.app/users/photoUser/${token}`
       );
       const photoResponse = await response.json();
 

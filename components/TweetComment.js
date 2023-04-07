@@ -51,7 +51,7 @@ export default function TweetComment(props) {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/comments/${tweetId}`
+        `https://myhackatweetbackend.vercel.app/tweets/comments/${tweetId}`
       );
       const data = await response.json();
       if (data.result) {
@@ -83,7 +83,7 @@ export default function TweetComment(props) {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/tweetComment/${tweetId}`,
+        `https://myhackatweetbackend.vercel.app/tweets/tweetComment/${tweetId}`,
         {
           method: "POST",
           headers: {

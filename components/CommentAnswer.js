@@ -19,7 +19,7 @@ export default function CommentAnswer(props) {
     if (!commentId) return; 
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/commentAnswer/${commentId}`,
+        `https://myhackatweetbackend.vercel.app/tweets/commentAnswer/${commentId}`,
         {
           method: "POST",
           headers: {

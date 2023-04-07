@@ -11,7 +11,7 @@ export default function Answer(props) {
   const fetchAnswers = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/commentAnswers/${commentId}`
+        `https://myhackatweetbackend.vercel.app/tweets/commentAnswers/${commentId}`
       );
       const data = await response.json();
       if (data.result) {

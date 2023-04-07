@@ -73,7 +73,7 @@ useEffect(() => {
   
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/tweets");
+      const response = await fetch("https://myhackatweetbackend.vercel.app/tweets");
       const data = await response.json();
       if (data.result) {
         setTweets(data.user);
@@ -116,7 +116,7 @@ useEffect(() => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/tweet/${userRed.token}`,
+        `https://myhackatweetbackend.vercel.app/tweets/tweet/${userRed.token}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -154,7 +154,7 @@ useEffect(() => {
   const handleDeleteTweet = async (token, tweetId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/deleteTweet/${token}/${tweetId}`,
+        `https://myhackatweetbackend.vercel.app/tweets/deleteTweet/${token}/${tweetId}`,
         {
           method: "PUT",
           headers: {
@@ -183,7 +183,7 @@ useEffect(() => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/likeTweet/${token}/${tweetId}`,
+        `https://myhackatweetbackend.vercel.app/tweets/likeTweet/${token}/${tweetId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -208,7 +208,7 @@ useEffect(() => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/tweets/dislikeTweet/${token}/${tweetId}`,
+        `https://myhackatweetbackend.vercel.app/tweets/dislikeTweet/${token}/${tweetId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
