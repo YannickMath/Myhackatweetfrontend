@@ -10,7 +10,7 @@ import React from "react";
 import Tweet from "../components/Tweet";
 import UploadImage from "./UploadImage";
 import ScrollToTopButton from "./ScrollToTopButton";
-import { useSpring, animated } from "react-spring";
+
 
 
 export default function Welcome() {
@@ -63,20 +63,6 @@ useEffect(() => {
 
   const [isLightMode, setIsLightMode] = useState(false);
   const [modal, setModal] = useState(false);
-
-  const [showContent, setShowContent] = useState(false);
-  const springProps = useSpring({
-    bottom: showContent ? '0%' : '-100%',
-    position: 'absolute',
-    width: '100%',
-    height: '50%',
-    backgroundColor: '#ffffff',
-  });
-
-  const handleCloseClick = () => {
-    setIsExpanded(false);
-  };
-  const toggleContent = () => setShowContent(!showContent);
 
   const handleCloseComment = () => {
     setModal(false);
@@ -282,9 +268,6 @@ useEffect(() => {
       />
     );
   });
-
-
-  
   return (
     <div
       className={styles.main}
@@ -461,7 +444,6 @@ useEffect(() => {
         className={styles.rightContainer}
         style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
       >
-       
         <div
           style={{
             display: "flex",
@@ -472,7 +454,6 @@ useEffect(() => {
 
           }}
         >
-           <button onClick={handleCloseClick}>Fermer</button>
           <h3 style={{ color: isLightMode ? "black" : "white" }}>Trends</h3>
           <BsLightningFill
             style={{
@@ -488,8 +469,7 @@ useEffect(() => {
 
           </span>
         </div>
-        <button onClick={toggleContent}>Afficher/masquer le contenu</button>
-      <animated.div style={springProps}>
+
         <div className={styles.hashtagContainer} style={{backgroundColor : isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7"}}>
           {hashtag.map((e, i) => {
             let hash = e?.substring(0);
@@ -523,7 +503,6 @@ useEffect(() => {
             );
           })}
         </div>
-        </animated.div>
       </div>
     </div>
     // </div>
