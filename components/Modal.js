@@ -16,7 +16,7 @@ export default function Modal({ setModal }) {
 
   const handleClickSignup = async () => {
     try {
-      const response = await fetch("https://myhackatweetbackend-juw0zaese-yannickmath.vercel.app/users/signup", {
+      const response = await fetch("http://localhost:3000/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -44,10 +44,9 @@ export default function Modal({ setModal }) {
       }
     } catch (error) {
       setErrorMessage(error.message);
-      // setErrorMessage("An error occurred, please try again later");
     }
   };
-
+console.log("hello")
   return (
     <div className={styles.main}>
       <div className={styles.logoModal}>
