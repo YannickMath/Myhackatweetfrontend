@@ -318,7 +318,7 @@ useEffect(() => {
                 style={{
                   color: isLightMode && "black",
                   marginLeft: "5px",
-                  fontSize: "18px",
+                  // fontSize: isSmallScreen ? "13px" :"18px",
                   
                 }}
               >
@@ -329,7 +329,7 @@ useEffect(() => {
                 style={{
                   color: isLightMode ? "black" : "white",
                   marginLeft: "5px",
-                  fontSize: "17px",
+                  // fontSize: isSmallScreen ? "12px" : "17px",
 
                 }}
               >

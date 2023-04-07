@@ -43,7 +43,8 @@ export default function Modal({ setModal }) {
         setInputUsername("");
       }
     } catch (error) {
-      setErrorMessage("An error occurred, please try again later");
+      setErrorMessage(error.message);
+      // setErrorMessage("An error occurred, please try again later");
     }
   };
 
