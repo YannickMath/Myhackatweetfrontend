@@ -456,6 +456,7 @@ export default function Welcome() {
             width: "80%",
             alignItems: "center",
             height: isSmallScreen && "3vh",
+            marginTop: isSmallScreen && "5px"
            
           }}
         >

@@ -283,13 +283,13 @@
   }
   .middleBottomContainer {
     /* width: 100vw; */
-    height: 57vh;
+    height: 56vh;
     margin-top:42px;
  
   }
   .rightContainer {
     width: 100vw;
-    height: 28vh;
+    height: 30vh;
     border: solid 3px gray;
     border-left: none;
     border-right: none;
