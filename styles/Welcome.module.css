@@ -262,7 +262,7 @@
   .leftContainer {
     padding: 5px;
     width: 100vw;
-    height: 8vh;
+    height: 6vh;
     justify-content: center;
     align-items: flex-start;
     display: flex;
@@ -277,19 +277,19 @@
   }
   .middleTopContainer {
     width: 100vw;
-    height: 3vh;
+    height: 5vh;
     margin-top:22px;
  
   }
   .middleBottomContainer {
     /* width: 100vw; */
-    height: 69vh;
+    height: 60vh;
     margin-top:42px;
  
   }
   .rightContainer {
     width: 100vw;
-    height: 12vh;
+    height: 15vh;
     border: solid 3px gray;
     border-left: none;
     border-right: none;

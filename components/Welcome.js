@@ -305,7 +305,7 @@ export default function Welcome() {
           className={styles.leftContainerBottomPart}
           style={{
             display: "flex",
-            justifyContent: "start",
+            // justifyContent: "start",
             alignItems: "flex-end",
             // height: "500px",
             marginBottom: "40px",
@@ -413,6 +413,7 @@ export default function Welcome() {
                 backgroundColor: isLightMode ? "white" : "white",
                 borderRadius: "20px",
                 width: "90%",
+                height: isSmallScreen && "4vh"
               }}
             />
           </div>
