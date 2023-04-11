@@ -11,6 +11,7 @@ import Tweet from "../components/Tweet";
 import UploadImage from "./UploadImage";
 // import ScrollToTopButton from "./ScrollToTopButton";
 import ReactModal from "react-modal";
+import { createEntityAdapter } from "@reduxjs/toolkit";
 
 export default function Welcome() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -306,7 +307,7 @@ export default function Welcome() {
             display: "flex",
             justifyContent: "start",
             alignItems: "flex-end",
-            height: "500px",
+            // height: "500px",
             marginBottom: "40px",
             marginLeft: "10px",
           }}
@@ -372,7 +373,7 @@ export default function Welcome() {
                 width: isSmallScreen ? "70vw" : "200px",
                 color: isLightMode ? "black" : "white",
                 marginLeft: isSmallScreen ? "15px" : "5px",
-                height: isSmallScreen && "1.5vh"
+                height: isSmallScreen && "2vh"
                 // display: isSmallScreen && "none",
               }}
             >
@@ -454,10 +455,12 @@ export default function Welcome() {
             width: "80%",
             alignItems: "center",
             height: isSmallScreen && "3vh",
+           
           }}
         >
           <h3
-            style={{ color: isLightMode ? "black" : "white" }}
+             
+              style={{ color: isLightMode ? "black" : "white", justifyContent: "center"}}
             onClick={() => setModalTrendIsOpen(true)}
           >
             Trends
@@ -467,11 +470,12 @@ export default function Welcome() {
               cursor: "pointer",
               color: isLightMode ? "black" : "white",
               marginLeft: "80px",
+              justifyContent: "center"
             }}
             size={20}
             onClick={handleThemeChange}
           />
-          <span style={{ color: isLightMode ? "black" : "white" }}>
+          <span style={{ color: isLightMode ? "black" : "white" , justifyContent: "center"}}>
             LightMode
           </span>
         </div>
@@ -533,7 +537,7 @@ export default function Welcome() {
             backgroundColor: isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7",
           }}
         >
-          <p onClick={() => setModalTrendIsOpen(false)}>X</p>
+          <p onClick={() => setModalTrendIsOpen(false)} style={{color: isLightMode && "white"}}>X</p>
           {hashtag.map((e, i) => {
             let hash = e?.substring(0);
 
