@@ -10,6 +10,7 @@ export default function UploadImage(props) {
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
   const isLightMode = props.isLightMode;
+  const isSmallScreen = props.isSmallScreen
 
  
 
@@ -109,7 +110,7 @@ return (
         position: "absolute",
         top: "0",
         left: "50%",
-        transform: "translate(-50%, 260%)",
+        transform: isSmallScreen ? "translate(-50%, 260%)" : "translate(-50%, 260%)",
         backgroundColor: isLightMode ? "black" : "white",
         borderRadius: "50%",
         padding: "0.2rem",
@@ -118,9 +119,11 @@ return (
       }}
     >
       <AiFillCamera
-        size={20}
+        size={isSmallScreen ? 50 : 15}
         style={{
           color: isLightMode ? "white" : "black",
+        // zIndex: "50",
+
         }}
       />
     </label>

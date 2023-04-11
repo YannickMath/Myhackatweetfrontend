@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import React from "react";
 import Tweet from "../components/Tweet";
 import UploadImage from "./UploadImage";
-import ScrollToTopButton from "./ScrollToTopButton";
+// import ScrollToTopButton from "./ScrollToTopButton";
 import ReactModal from "react-modal";
 
 export default function Welcome() {
@@ -262,8 +262,14 @@ export default function Welcome() {
     );
   });
 
-
   const [modalTrendIsOpen, setModalTrendIsOpen] = useState(false);
+
+  function handleScrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
 
 
   return (
@@ -360,13 +366,14 @@ export default function Welcome() {
           className={styles.middleTopContainer}
           style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
         >
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: isSmallScreen ? "flex-end" : "center", height: isSmallScreen && "4vh" , justifyContent: isSmallScreen && "space-between", width: isSmallScreen && "90vw" }}>
             <h3
               style={{
-                width: "200px",
+                width: isSmallScreen ? "70vw" : "200px",
                 color: isLightMode ? "black" : "white",
-                marginLeft: "5px",
-                display: isSmallScreen && "none",
+                marginLeft: isSmallScreen ? "15px" : "5px",
+                height: isSmallScreen && "1.5vh"
+                // display: isSmallScreen && "none",
               }}
             >
               {!clickHashtag ? "Home" : `${clickNameHash.slice(0, 25)}...`}
@@ -381,10 +388,10 @@ export default function Welcome() {
                   alignItems: "center",
                   fontSize: "15px",
                   textDecoration: "underline",
-                  width: "20%",
+                  width:  isSmallScreen ? "15%": "20%",
                   cursor: "pointer",
                   color: isLightMode ? "black" : "blue",
-                  marginLeft: clickHashtag ? "160px" : "",
+                  marginLeft: clickHashtag ? (isSmallScreen ? "0px" : "160px") : "",
                 }}
               >
                 Back
@@ -392,7 +399,7 @@ export default function Welcome() {
               // </div>
             )}
           </div>
-          <div>
+          <div style={{height: isSmallScreen && "14vh"}}>
             <input
               onKeyDown={handleKeyDown}
               value={newTweet}
@@ -426,12 +433,13 @@ export default function Welcome() {
               Tweet
             </button>
           </div>
-          <ScrollToTopButton />
         </div>
         <div
           className={styles.middleBottomContainer}
           style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
         >
+          <button style={{position: "absolute", zIndex: "50", cursor: "pointer " }} onClick={handleScrollToTop}>
+            </button>
           {tweetView}
         </div>
       </div>
@@ -448,7 +456,12 @@ export default function Welcome() {
             height: isSmallScreen && "3vh",
           }}
         >
-          <h3 style={{ color: isLightMode ? "black" : "white" }} onClick={() => setModalTrendIsOpen(true)}>Trends</h3>
+          <h3
+            style={{ color: isLightMode ? "black" : "white" }}
+            onClick={() => setModalTrendIsOpen(true)}
+          >
+            Trends
+          </h3>
           <BsLightningFill
             style={{
               cursor: "pointer",
@@ -462,7 +475,6 @@ export default function Welcome() {
             LightMode
           </span>
         </div>
-      
 
         {!isSmallScreen && (
           <div
@@ -512,60 +524,56 @@ export default function Welcome() {
         )}
       </div>
       <ReactModal
-  isOpen={modalTrendIsOpen}
-  onRequestClose={() => setModalTrendIsOpen(false)}
-  // style={{opacity: "0"}}
->
-<div
-            className={styles.hashtagContainer}
-            style={{
-              backgroundColor: isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7",
-            }}
-          >
-            <p onClick={() => setModalTrendIsOpen(false)}>X</p>
-            {hashtag.map((e, i) => {
-              let hash = e?.substring(0);
+        isOpen={modalTrendIsOpen}
+        onRequestClose={() => setModalTrendIsOpen(false)}
+      >
+        <div
+          className={styles.hashtagContainer}
+          style={{
+            backgroundColor: isLightMode ? "rgb(31, 30, 30)" : "#EAEAE7",
+          }}
+        >
+          <p onClick={() => setModalTrendIsOpen(false)}>X</p>
+          {hashtag.map((e, i) => {
+            let hash = e?.substring(0);
 
-              return (
-                <div key={i} className={styles.hashPostContainer}>
-                  <a
-                    // href={hash}
+            return (
+              <div key={i} className={styles.hashPostContainer}>
+                <a
+                  // href={hash}
+                  style={{
+                    textDecoration: "none",
+                    color: "#000",
+                    cursor: "pointer",
+                  }}
+                >
+                  <h3
+                    onClick={() => {
+                      handleClickNameHash(hash);
+                      setModalTrendIsOpen(false);
+                    }}
                     style={{
-                      textDecoration: "none",
-                      color: "#000",
-                      cursor: "pointer",
+                      color: isLightMode ? "#ffffff" : "black",
+                      fontSize: "20px",
+                      height: "0.5vh",
                     }}
                   >
-                    <h3
-                      onClick={() => {
-                        handleClickNameHash(hash);
-                        setModalTrendIsOpen(false);
-                     }}
-                      style={{
-                        color: isLightMode ? "#ffffff" : "black",
-                        fontSize: "20px",
-                        height: "0.5vh",
-                      }}
-                    >
-                      {hash.length > 22 ? `${hash.slice(0, 22)}...` : hash}
-                    </h3>
-                  </a>
-                  <div
-                    style={{ display: "flex", color: "gray", height: "5vh" }}
-                  >
-                    <p>{countIdenticalStrings(hashtagCopy, hash)}</p>
-                    <p style={{ marginLeft: "5px" }}>
-                      {countIdenticalStrings(hashtagCopy, hash) === 1
-                        ? "Tweet"
-                        : "Tweets"}{" "}
-                    </p>
-                  </div>
+                    {hash.length > 22 ? `${hash.slice(0, 22)}...` : hash}
+                  </h3>
+                </a>
+                <div style={{ display: "flex", color: "gray", height: "5vh" }}>
+                  <p>{countIdenticalStrings(hashtagCopy, hash)}</p>
+                  <p style={{ marginLeft: "5px" }}>
+                    {countIdenticalStrings(hashtagCopy, hash) === 1
+                      ? "Tweet"
+                      : "Tweets"}{" "}
+                  </p>
                 </div>
-              );
-            })}
-          </div>
-    
-</ReactModal>
+              </div>
+            );
+          })}
+        </div>
+      </ReactModal>
     </div>
     // </div>
   );

@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import { useState } from "react";
 import TweetComment from "../components/TweetComment";
+import { useRef } from "react";
+import { useEffect } from "react";
 // import '../styles/fonts.css';
 
 export default function Tweet(props) {
@@ -19,7 +21,7 @@ export default function Tweet(props) {
   const userRed = useSelector((state) => state.user.value);
 
   // const { tweet, modal, setModal, handleCloseComment } = props;
-// console.log("tweetId", tweetId)
+  // console.log("tweetId", tweetId)
   const {
     handleDeleteTweet,
     handleDislikeTweet,
@@ -62,6 +64,16 @@ export default function Tweet(props) {
     return true;
   };
 
+
+
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.style.height = "auto";
+      containerRef.current.style.height = `${containerRef.current.scrollHeight}px`;
+    }
+  }, [props.tweet.tweet.tweet]);
   return (
     <>
       {isTweetVisible() && (
@@ -70,7 +82,6 @@ export default function Tweet(props) {
           style={{
             backgroundColor: isLightMode ? "#DCD8F3" : "black",
             color: isLightMode ? "black" : "white",
-            
           }}
         >
           <div>
@@ -91,7 +102,7 @@ export default function Tweet(props) {
               >
                 <img
                   className={styles.userPicture}
-                  style={{ marginTop: isSmallScreen && "4px"}}
+                  style={{ marginTop: isSmallScreen && "4px" }}
                   src={
                     props.tweet.photo
                       ? props.tweet.photo
@@ -104,8 +115,7 @@ export default function Tweet(props) {
                     fontSize: "15px",
                     fontWeight: "bold",
                     marginLeft: "5px",
-                    marginTop: isSmallScreen && "20px"
-                   
+                    marginTop: isSmallScreen && "20px",
                   }}
                 >
                   {props.tweet.firstname}
@@ -121,20 +131,22 @@ export default function Tweet(props) {
               </div>
             </div>
             <div
-              style={{
-                marginLeft: "5px",
-                display: "flex",
-                maxHeight: "18vh",
-              padding: isSmallScreen && "2px",
-                width: "100%",
-                flexWrap: "wrap",
-                wordWrap: "break-word",
-                alignContent: "center",
-                lineHeight: isSmallScreen && "1.2",
-                marginTop: isSmallScreen && "-15px",
-                marginBottom: isSmallScreen && "5px"
-              }}
-            >
+      ref={containerRef}
+      style={{
+        marginLeft: "5px",
+        display: "flex",
+        maxHeight: isSmallScreen ? "58vh" : "21vh",
+        padding: isSmallScreen && "2px",
+        width: "100%",
+        height: isSmallScreen && "2vh",
+        flexWrap: "wrap",
+        wordWrap: "break-word",
+        alignContent: "center",
+        lineHeight: isSmallScreen ? "1.2" : "1",
+        marginTop: "-20px",
+        marginBottom: "-20px",
+      }}
+    >
               <p style={{ width: "98%" }}>
                 {props.tweet.tweet.tweet.split(" ").map((word, index) => {
                   const color = word.startsWith("#")
@@ -143,7 +155,13 @@ export default function Tweet(props) {
                     ? "black"
                     : "white";
                   return (
-                    <span key={index} style={{ color, fontSize: isSmallScreen ? "14px" : "19px" }}>
+                    <span
+                      key={index}
+                      style={{
+                        color,
+                        fontSize: isSmallScreen ? "14px" : "15px",
+                      }}
+                    >
                       {word}{" "}
                     </span>
                   );
@@ -152,7 +170,11 @@ export default function Tweet(props) {
             </div>
           </div>
           <div
-            style={{ margin: "15px", marginBottom: isSmallScreen ? "10px" : "20px", height: "6.2vh" }}
+            style={{
+              margin: "15px",
+              marginBottom: isSmallScreen ? "10px" : "20px",
+              height: "6.2vh",
+            }}
           >
             <FaThumbsUp
               onClick={() =>
@@ -220,8 +242,8 @@ export default function Tweet(props) {
             />
             {modal && (
               <TweetComment
-              tweet={props.tweet}
-              formattedDate={formattedDate}
+                tweet={props.tweet}
+                formattedDate={formattedDate}
                 modal={modal}
                 setModal={setModal}
                 tweetId={tweetId}
@@ -257,7 +279,12 @@ export default function Tweet(props) {
                   // color: isLightMode ? "black" : "white",
                   width: "25px",
                   fontSize: "12px",
-                  marginLeft: "1%"
+                  marginLeft:
+                    props.tweet.token === userRed.token
+                      ? isSmallScreen
+                        ? "17%"
+                        : "8%"
+                      : "1%",
                 }}
               >
                 {props.tweet.tweet.comments.length}
