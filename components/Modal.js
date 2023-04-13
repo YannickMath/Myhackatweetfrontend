@@ -15,6 +15,10 @@ export default function Modal({ setModal, isSmallScreen }) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleClickSignup = async () => {
+    if (!inputUsername || !inputFirstname || !inputPassword) {
+			alert("Missing or empty fields.");
+			return;
+		  }
     try {
       const response = await fetch("https://myhackatweetbackend.vercel.app/users/signup", {
         method: "POST",

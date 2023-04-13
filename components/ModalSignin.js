@@ -14,6 +14,10 @@ const userRed = useSelector((state) => state.user.vlaue)
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleClickSignin = async () => {
+    if (!inputUsername || !inputPassword) {
+			alert("Missing or empty fields.");
+			return;
+		  }
     try {
       const response = await fetch("https://myhackatweetbackend.vercel.app/users/signin", {
         method: "POST",
