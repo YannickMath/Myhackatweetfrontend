@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { login } from "@/reducers/user.slice";
 
-export default function Modal({ setModal }) {
+export default function Modal({ setModal, isSmallScreen }) {
   const router = useRouter();
   const dispatch = useDispatch();
 

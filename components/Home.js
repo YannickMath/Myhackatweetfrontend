@@ -74,8 +74,8 @@ export default function Home() {
             Sign in
           </button>
         </div>
-        {modal && <Modal setModal={setModal} />}
-        {modalSignin && <ModalSignin setModalSignin={setModalSignin} />}
+        {modal && <Modal setModal={setModal} isSmallScreen={isSmallScreen} />}
+        {modalSignin && <ModalSignin setModalSignin={setModalSignin} isSmallScreen={isSmallScreen}/>}
       </div>
     </div>
   );
