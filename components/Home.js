@@ -42,7 +42,7 @@ export default function Home() {
       <div className={styles.leftContainer}></div>
       <div className={styles.rightContainer}>
         <div className={styles.rightTopContainer}>
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative"}}>
             <AiOutlineTwitter
               size={70}
               color="white"
@@ -52,11 +52,11 @@ export default function Home() {
                 position: "absolute",
                 left: isSmallScreen && "40%",
                 // marginLeft: isSmallScreen && "37%",
-                marginTop: isSmallScreen && "16%",
+                marginTop: isSmallScreen && "6%",
               }}
             />
           </div>
-          <div>
+          <div >
             <h1 className={styles.title1}>
               See what's
               <br />
