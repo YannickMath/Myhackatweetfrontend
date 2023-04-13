@@ -115,7 +115,7 @@ export default function Tweet(props) {
                     fontSize: "15px",
                     fontWeight: "bold",
                     marginLeft: "5px",
-                    marginTop: isSmallScreen && "20px",
+                    marginTop: "20px",
                   }}
                 >
                   {props.tweet.firstname}
@@ -143,7 +143,7 @@ export default function Tweet(props) {
         wordWrap: "break-word",
         alignContent: "center",
         lineHeight: isSmallScreen ? "1.2" : "1",
-        marginTop: "-35px",
+        marginTop: isSmallScreen ? "-35px" : "-20px",
         marginBottom: "-20px",
       }}
     >
