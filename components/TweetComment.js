@@ -19,7 +19,8 @@ export default function TweetComment(props) {
   // const [inputVisible, setInputVisible] = useState(false);
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  console.log("isSmallScreen value in parent:", isSmallScreen);
+  // console.log("isSmallScreen value in parent:", isSmallScreen);
+  console.log("comments", comments);
 
   const updateScreenSize = () => {
     const mediaQuery = window.matchMedia(
@@ -119,6 +120,11 @@ const handleAnswerModal = () => {
   setAnswerModal(true)
 }
 // console.log("issmallscreentweetComment", isSmallScreen)
+
+
+
+
+
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -190,8 +196,8 @@ const handleAnswerModal = () => {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "space-between",
-                    width: "10vw",
+                    justifyContent: isSmallScreen ? "space-around" : "space-between",
+                    width: isSmallScreen ? "40vw" : "10vw",
                   }}
                 >
                   <p style={{ fontSize: "8px" }}>{formattedDate}</p>
@@ -199,7 +205,7 @@ const handleAnswerModal = () => {
                     onClick={handleAnswerModal}
                     style={{ cursor: "pointer" }}
                   />
-                  <p style={{ fontSize: "60%", marginLeft: "5%" }}>
+                  <p style={{ fontSize: "60%", marginLeft: isSmallScreen ? "-18%" : "5%" }}>
                     {comment.answers ? comment.answers.length : "0"}
                   </p>
                 </div>
@@ -210,6 +216,8 @@ const handleAnswerModal = () => {
                   fetchComment={fetchComment}
                   useEffect={useEffect}
                   handleClickAnswer={handleClickAnswer}
+                  isSmallScreen={isSmallScreen}
+                  comments={comments}
                 />
                 {answerModal && comment._id === commentId && (
                   <div>
