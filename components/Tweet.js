@@ -143,7 +143,7 @@ export default function Tweet(props) {
         wordWrap: "break-word",
         alignContent: "center",
         lineHeight: isSmallScreen ? "1.2" : "1",
-        marginTop: isSmallScreen ? "-35px" : "-20px",
+        marginTop: isSmallScreen ? "-40px" : "-20px",
         marginBottom: "-20px",
       }}
     >
