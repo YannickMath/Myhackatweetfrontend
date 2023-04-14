@@ -9,46 +9,24 @@ import { useEffect } from "react";
 import React from "react";
 import Tweet from "../components/Tweet";
 import UploadImage from "./UploadImage";
-// import ScrollToTopButton from "./ScrollToTopButton";
 import ReactModal from "react-modal";
-import { createEntityAdapter } from "@reduxjs/toolkit";
+import { FaArrowUp } from 'react-icons/fa';
+import { useRef } from "react";
 
 export default function Welcome() {
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-  // console.log("isSmallScreen value in parent:", isSmallScreen);
-  console.log("ISSMALLSCREEN", isSmallScreen);
-
-  const updateScreenSize = () => {
-    const mediaQuery = window.matchMedia(
-      "(max-width: 768px) and (orientation: portrait)"
-    );
-    setIsSmallScreen(mediaQuery.matches);
-  };
-
-  useEffect(() => {
-    updateScreenSize(); // Call the function once to set the initial value
-    window.addEventListener("resize", updateScreenSize); // Listen for window resize events
-
-    // Cleanup the event listener when the component is unmounted
-    return () => {
-      window.removeEventListener("resize", updateScreenSize);
-    };
-  }, []);
+  
 
   // Router hook
   const router = useRouter();
-
   // Dispatch hook
   const dispatch = useDispatch();
 
   // Selectors to access the user and tweet values from the store
   const userRed = useSelector((state) => state.user.value);
-
   // State for tweet and count
   //Etat pour compter le nombre de hashtag
   const [count, setCount] = useState(0);
   const [hashtagCopy, setHashtagCopy] = useState([]);
-
   //Etat pour charger tous les hashtags au chargement de la page
   const [hashtag, setHashtag] = useState([]);
   //ETat pour charger l'input du nouveau tweet posté
@@ -58,9 +36,13 @@ export default function Welcome() {
   //Etat pour compter le nombre de hashtag
   const [clickHashtag, setClickHashtag] = useState(false);
   const [clickNameHash, setClickNameHash] = useState("");
-
   const [isLightMode, setIsLightMode] = useState(false);
   const [modal, setModal] = useState(false);
+  const [modalTrendIsOpen, setModalTrendIsOpen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+
+
 
   const handleCloseComment = () => {
     setModal(false);
@@ -263,16 +245,38 @@ export default function Welcome() {
     );
   });
 
-  const [modalTrendIsOpen, setModalTrendIsOpen] = useState(false);
 
-  function handleScrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }
+  const updateScreenSize = () => {
+    const mediaQuery = window.matchMedia(
+      "(max-width: 768px) and (orientation: portrait)"
+    );
+    setIsSmallScreen(mediaQuery.matches);
+  };
+
+  useEffect(() => {
+    updateScreenSize(); // Call the function once to set the initial value
+    window.addEventListener("resize", updateScreenSize); // Listen for window resize events
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", updateScreenSize);
+    };
+  }, []);
 
 
+
+    // const middleBottomContainerRef = useRef(null);
+  
+    // function handleScrollToTop() {
+    //   console.log("scroll")
+    //   if (middleBottomContainerRef.current) {
+    //     middleBottomContainerRef.current.scroll({
+    //       top: 0,
+    //       behavior: "smooth"
+    //     });
+    //   }
+    // }
+  
   return (
     <div
       className={styles.main}
@@ -440,8 +444,13 @@ export default function Welcome() {
           className={styles.middleBottomContainer}
           style={{ backgroundColor: isLightMode ? "#DCD8F3" : "black" }}
         >
-          <button style={{position: "absolute", zIndex: "50", cursor: "pointer " }} onClick={handleScrollToTop}>
-            </button>
+     {/* <button
+        className={styles.BtnScrollToTop}
+        onClick={handleScrollToTop}
+        style={{ backgroundColor: isLightMode ? "white" : "#2707F1", position: "absolute" }}
+      >
+        <FaArrowUp size={20} style={{cursor: "pointer"}}/>
+      </button> */}
           {tweetView}
         </div>
       </div>
